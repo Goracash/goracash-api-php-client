@@ -1,0 +1,35 @@
+{
+    "name": "goracash/apiclient",
+    "description": "Client library for Goracash APIs ",
+    "type": "library",
+    "version": "master",
+    "source": {
+        "url": "git@github.com:Goracash/goracash-api-php-client.git",
+        "type": "git",
+        "reference": "origin/master"
+    },
+    "keywords": ["goracash"],
+    "homepage": "http://www.goracash.com/",
+    "licence": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "David Patiashvili",
+            "email": "stratagem.david@gmail.com",
+            "homepage": "https://www.patiashvili.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "php": ">=5.3.0",
+        "phpunit/phpunit": "4.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Goracash\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
