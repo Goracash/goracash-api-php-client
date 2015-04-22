@@ -17,7 +17,8 @@
  */
 
 namespace Goracash;
-use Goracash\Config as Config;
+
+use Goracash\Logger\Primary as GoracashLogger;
 
 if (!class_exists('\Goracash\Client')) {
     require_once dirname(__FILE__) . '/autoload.php';
@@ -109,6 +110,28 @@ class Client
     public function getBasePath()
     {
         return $this->config->getBasePath();
+    }
+
+    /**
+     * Set the Logger object
+     * @param GoracashLogger $logger
+     */
+    public function setLogger(GoracashLogger $logger)
+    {
+        $this->config->setLoggerClass(get_class($logger));
+        $this->logger = $logger;
+    }
+
+    /**
+     * @return GoracashLogger Logger implementation
+     */
+    public function getLogger()
+    {
+        if (!isset($this->logger)) {
+            $class = $this->config->getLoggerClass();
+            $this->logger = new $class($this);
+        }
+        return $this->logger;
     }
 
     /**

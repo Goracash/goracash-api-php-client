@@ -46,15 +46,27 @@ class Config
             // Which Authentication, Storage and HTTP IO classes to use.
             'auth_class'    => 'Goracash\Auth\OAuth2',
             'io_class'      => self::USE_AUTO_IO_SELECTION,
+            'logger_class'  => 'Goracash\Logger\Null',
             // Don't change these unless you're working against a special development
             // or testing environment.
             'base_path' => 'https://ws.goracash.com',
             // Definition of class specific values, like file paths and so on.
             'classes' => array(
-                '\Goracash\IO\Primary' => array(
+                'Goracash\IO\Primary' => array(
                     'request_timeout_seconds' => 100,
                 ),
-                '\Goracash\Http\Request' => array(
+                'Goracash\Logger\Primary' => array(
+                    'level' => 'debug',
+                    'log_format' => "[%datetime%] %level%: %message% %context%\n",
+                    'date_format' => 'd/M/Y:H:i:s O',
+                    'allow_newlines' => true
+                ),
+                'Goracash\Logger\File' => array(
+                    'file' => 'php://stdout',
+                    'mode' => 0640,
+                    'lock' => false,
+                ),
+                'Goracash\Http\Request' => array(
                     // Disable the use of gzip on calls if set to true. Defaults to false.
                     'disable_gzip' => self::GZIP_ENABLED,
                     // We default gzip to disabled on uploads even if gzip is otherwise
@@ -130,6 +142,31 @@ class Config
         else {
             return $this->configuration['classes'][$class][$key];
         }
+    }
+
+    /**
+     * Return the configured logger class.
+     * @return string
+     */
+    public function getLoggerClass()
+    {
+        return $this->configuration['logger_class'];
+    }
+
+    /**
+     * Set the logger class.
+     *
+     * @param $class string the class name to set
+     */
+    public function setLoggerClass($class)
+    {
+        $prev = $this->configuration['logger_class'];
+        if (!isset($this->configuration['classes'][$class]) &&
+            isset($this->configuration['classes'][$prev])) {
+            $this->configuration['classes'][$class] =
+                $this->configuration['classes'][$prev];
+        }
+        $this->configuration['logger_class'] = $class;
     }
 
     /**

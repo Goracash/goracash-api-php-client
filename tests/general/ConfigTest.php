@@ -130,6 +130,19 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('myPersonalClass', $result);
     }
 
+    public function testGetLoggerClass()
+    {
+        $result = $this->Config->getLoggerClass();
+        $this->assertEquals('Goracash\Logger\Null', $result);
+    }
+
+    public function testSetLoggerClass()
+    {
+        $this->Config->setLoggerClass('myPersonalClass');
+        $result = $this->Config->getLoggerClass();
+        $this->assertEquals('myPersonalClass', $result);
+    }
+
     public function testGetIoClass()
     {
         $result = $this->Config->getIoClass();

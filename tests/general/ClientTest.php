@@ -146,6 +146,20 @@ class ClientTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSetLogger()
+    {
+        $Logger = new \Goracash\Logger\File($this->Client);
+        $this->Client->setLogger($Logger);
+        $Logger = $this->Client->getLogger();
+        $this->assertInstanceOf('Goracash\Logger\File', $Logger);
+    }
+
+    public function testGetLogger()
+    {
+        $Logger = $this->Client->getLogger();
+        $this->assertInstanceOf('Goracash\Logger\Null', $Logger);
+    }
+
     public function testGetBasePath()
     {
         $result = $this->Client->getBasePath();
