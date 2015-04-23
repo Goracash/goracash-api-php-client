@@ -44,7 +44,7 @@ class Config
             // The application_name is included in the User-Agent HTTP header.
             'application_name' => '',
             // Which Authentication, Storage and HTTP IO classes to use.
-            'auth_class'    => 'Goracash\Auth\OAuth2',
+            'auth_class'    => 'Goracash\Service\Authentication',
             'io_class'      => self::USE_AUTO_IO_SELECTION,
             'logger_class'  => 'Goracash\Logger\Null',
             // Don't change these unless you're working against a special development
@@ -77,27 +77,12 @@ class Config
                 ),
                 // If you want to pass in OAuth 2.0 settings, they will need to be
                 // structured like this.
-                'Goracash\Auth\OAuth2' => array(
+                'Goracash\Service\Authentication' => array(
                     // Keys for OAuth 2.0 access, see the API console
                     'client_id' => '',
                     'client_secret' => '',
-                ),
-                'Goracash\Service\Exception' => array(
-                    'retry_map' => array(
-                        '500' => self::TASK_RETRY_ALWAYS,
-                        '503' => self::TASK_RETRY_ALWAYS,
-                        'rateLimitExceeded' => self::TASK_RETRY_ALWAYS,
-                        'userRateLimitExceeded' => self::TASK_RETRY_ALWAYS
-                    )
-                ),
-                'Goracash\IO\Exception' => array(
-                    'retry_map' => !extension_loaded('curl') ? array() : array(
-                        CURLE_COULDNT_RESOLVE_HOST => self::TASK_RETRY_ALWAYS,
-                        CURLE_COULDNT_CONNECT => self::TASK_RETRY_ALWAYS,
-                        CURLE_OPERATION_TIMEOUTED => self::TASK_RETRY_ALWAYS,
-                        CURLE_SSL_CONNECT_ERROR => self::TASK_RETRY_ALWAYS,
-                        CURLE_GOT_NOTHING => self::TASK_RETRY_ALWAYS
-                    )
+                    'access_token' => '',
+                    'access_token_limit' => '',
                 ),
             ),
         );
@@ -243,6 +228,15 @@ class Config
     {
         $this->setAuthConfig('client_id', $clientId);
     }
+
+    /**
+     * Get the client ID for the auth class.
+     */
+    public function getClientId()
+    {
+        return $this->getClassConfig('Goracash\Service\Authentication', 'client_id');
+    }
+
     /**
      * Set the client secret for the auth class.
      * @param $secret string - the API console client secret
@@ -250,6 +244,43 @@ class Config
     public function setClientSecret($secret)
     {
         $this->setAuthConfig('client_secret', $secret);
+    }
+
+    /**
+     * Get the client secret for the auth class.
+     */
+    public function getClientSecret()
+    {
+        return $this->getClassConfig('Goracash\Service\Authentication', 'client_secret');
+    }
+
+    /**
+     * Set the client token for the auth class.
+     * @param $access_token string - the API console client secret
+     * @param $access_token_limit
+     */
+    public function setAccessToken($access_token, $access_token_limit = null)
+    {
+        $this->setAuthConfig('access_token', $access_token);
+        if ($access_token_limit) {
+            $this->setAuthConfig('access_token_limit', $access_token_limit);
+        }
+    }
+
+    /**
+     * Get the client token for the auth class.
+     */
+    public function getAccessToken()
+    {
+       return $this->getClassConfig('Goracash\Service\Authentication', 'access_token');
+    }
+
+    /**
+     * Get the client token limit for the auth class.
+     */
+    public function getAccessTokenLimit()
+    {
+        return $this->getClassConfig('Goracash\Service\Authentication', 'access_token_limit');
     }
 
     /**

@@ -76,6 +76,52 @@ class Client
     }
 
     /**
+     * Set the OAuth 2.0 Client Token.
+     * @param string $access_token
+     * @param string $access_token_limit
+     */
+    public function setAccessToken($access_token, $access_token_limit = null)
+    {
+        $this->config->setAccessToken($access_token, $access_token_limit);
+    }
+
+    /**
+     * Get the OAuth 2.0 Client ID.
+     * @return string $token
+     */
+    public function getClientId()
+    {
+        return $this->config->getClientId();
+    }
+
+    /**
+     * Get the OAuth 2.0 Client Secret.
+     * @return string $token
+     */
+    public function getClientSecret()
+    {
+        return $this->config->getClientSecret();
+    }
+
+    /**
+     * Get the OAuth 2.0 Client Token.
+     * @return string $token
+     */
+    public function getAccessToken()
+    {
+        return $this->config->getAccessToken();
+    }
+
+    /**
+     * Get the OAuth 2.0 Client Token.
+     * @return string $token
+     */
+    public function getAccessTokenLimit()
+    {
+        return $this->config->getAccessTokenLimit();
+    }
+
+    /**
      * Retrieve custom configuration for a specific class.
      * @param $class string|object - class or instance of class to retrieve
      * @param $key string optional - key to retrieve

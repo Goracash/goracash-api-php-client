@@ -42,14 +42,14 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
         $result = $Config->getAuthClass();
         $this->assertEquals('Goracash\Auth\Other', $result);
 
-        $result = $Config->getClassConfig('Goracash\Auth\OAuth2', 'client_id');
+        $result = $Config->getClassConfig('Goracash\Service\Authentication', 'client_id');
         $this->assertEquals('1234.testClientId', $result);
 
-        $result = $Config->getClassConfig('Goracash\Auth\OAuth2', 'client_secret');
+        $result = $Config->getClassConfig('Goracash\Service\Authentication', 'client_secret');
         $this->assertEquals('1234.testClientSecret', $result);
 
         $result = $Config->getBasePath();
-        $this->assertEquals('https://ws.goracash.com', $result);
+        $this->assertEquals('http://ws.goracash.center.dev', $result);
     }
 
     public function testGetClassConfig()
@@ -57,14 +57,14 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
         $result = $this->Config->getClassConfig('Not existed class');
         $this->assertNull($result);
 
-        $result = $this->Config->getClassConfig('Goracash\Auth\OAuth2');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication');
         $this->assertInternalType('array', $result);
         $this->assertArrayHasKey('client_id', $result);
         $this->assertEquals('', $result['client_id']);
         $this->assertArrayHasKey('client_secret', $result);
         $this->assertEquals('', $result['client_secret']);
 
-        $result = $this->Config->getClassConfig('Goracash\Auth\OAuth2', 'client_id');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'client_id');
         $this->assertEquals('', $result);
     }
 
@@ -73,7 +73,7 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
      */
     public function testGetClassConfigInvalidKey()
     {
-        $this->Config->getClassConfig('Goracash\Auth\OAuth2', 'Not existed key');
+        $this->Config->getClassConfig('Goracash\Service\Authentication', 'Not existed key');
     }
 
     public function testSetClassConfigStringEmptyValue()
@@ -120,7 +120,7 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
     public function testGetAuthClass()
     {
         $result = $this->Config->getAuthClass();
-        $this->assertEquals('Goracash\Auth\OAuth2', $result);
+        $this->assertEquals('Goracash\Service\Authentication', $result);
     }
 
     public function testSetAuthClass()
@@ -172,14 +172,57 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
     public function testSetClientId()
     {
         $this->Config->setClientId('myClientId');
-        $result = $this->Config->getClassConfig('Goracash\Auth\OAuth2', 'client_id');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'client_id');
+        $this->assertEquals('myClientId', $result);
+    }
+
+    public function testSetAccessToken()
+    {
+        $this->Config->setAccessToken('myClientToken');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'access_token');
+        $this->assertEquals('myClientToken', $result);
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'access_token_limit');
+        $this->assertEquals('', $result);
+
+        $this->Config->setAccessToken('myClientToken2', '2015-12-01 00::12:03');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'access_token');
+        $this->assertEquals('myClientToken2', $result);
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'access_token_limit');
+        $this->assertEquals('2015-12-01 00::12:03', $result);
+    }
+
+    public function testGetAccessToken()
+    {
+        $this->Config->setAccessToken('myClientToken');
+        $result = $this->Config->getAccessToken();
+        $this->assertEquals('myClientToken', $result);
+    }
+
+    public function testGetAccessTokenLimit()
+    {
+        $this->Config->setAccessToken('myClientToken', '2015-04-01 05:26:13');
+        $result = $this->Config->getAccessTokenLimit();
+        $this->assertEquals('2015-04-01 05:26:13', $result);
+    }
+
+    public function testGetClientId()
+    {
+        $this->Config->setClientId('myClientId');
+        $result = $this->Config->getClientId();
         $this->assertEquals('myClientId', $result);
     }
 
     public function testSetClientSecret()
     {
         $this->Config->setClientSecret('myClientSecret');
-        $result = $this->Config->getClassConfig('Goracash\Auth\OAuth2', 'client_secret');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'client_secret');
+        $this->assertEquals('myClientSecret', $result);
+    }
+
+    public function testGetClientSecret()
+    {
+        $this->Config->setClientSecret('myClientSecret');
+        $result = $this->Config->getClientSecret();
         $this->assertEquals('myClientSecret', $result);
     }
 
