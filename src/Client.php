@@ -19,6 +19,8 @@
 namespace Goracash;
 
 use Goracash\Logger\Primary as GoracashLogger;
+use Goracash\IO\Primary as GoracashIO;
+use Goracash\Service\Authentication as Authentication;
 
 if (!class_exists('\Goracash\Client')) {
     require_once dirname(__FILE__) . '/autoload.php';
@@ -33,7 +35,7 @@ class Client
     const USER_AGENT_SUFFIX = "goracash-api-php-client/";
 
     /**
-     * @var Goracash\Config $config
+     * @var Config $config
      */
     private $config;
 
@@ -43,7 +45,7 @@ class Client
     /**
      * Construct the Goracash Client
      *
-     * @param $config (Goracash\Config or string for ini file to load)
+     * @param $config (Config or string for ini file to load)
      */
     public function __construct($config = null)
     {
@@ -52,6 +54,14 @@ class Client
         }
         else if ( !($config instanceof Config)) {
             $config = new Config();
+        }
+
+        if ($config->getIoClass() == Config::USE_AUTO_IO_SELECTION) {
+            if (function_exists('curl_version') && function_exists('curl_exec')) {
+                $config->setIoClass('Goracash\IO\Curl');
+            } else {
+                $config->setIoClass('Goracash\IO\Stream');
+            }
         }
 
         $this->config = $config;
@@ -178,6 +188,46 @@ class Client
             $this->logger = new $class($this);
         }
         return $this->logger;
+    }
+
+    /**
+     * @return Authentication Authentication implementation
+     */
+    public function getAuth()
+    {
+        if (!isset($this->auth)) {
+            $class = $this->config->getAuthClass();
+            $this->auth = new $class($this);
+        }
+        return $this->auth;
+    }
+
+    /**
+     * Set the IO object
+     * @param GoracashIO $io
+     */
+    public function setIo(GoracashIO $io)
+    {
+        $this->config->setIoClass(get_class($io));
+        $this->io = $io;
+    }
+
+    /**
+     * @return GoracashIO IO implementation
+     */
+    public function getIo()
+    {
+        if (!isset($this->io)) {
+            $class = $this->config->getIoClass();
+            $this->io = new $class($this);
+        }
+        return $this->io;
+    }
+
+    public function authenticate()
+    {
+        $this->getAuth()->authenticate();
+        $this->authenticated = true;
     }
 
     /**

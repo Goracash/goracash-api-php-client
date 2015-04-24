@@ -140,12 +140,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $result);
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
     public function testGetClassConfigInvalidKey()
     {
-        $this->Client->getClassConfig('Goracash\Service\Authentication', 'Not existed key');
+        $result = $this->Client->getClassConfig('Goracash\Service\Authentication', 'Not existed key');
+        $this->assertNull($result);
     }
 
     public function testSetClassConfigStringEmptyValue()
@@ -201,6 +199,21 @@ class ClientTest extends PHPUnit_Framework_TestCase
     {
         $Logger = $this->Client->getLogger();
         $this->assertInstanceOf('Goracash\Logger\Null', $Logger);
+    }
+
+    public function testSetIo()
+    {
+        $Io = new \Goracash\IO\Curl($this->Client);
+        $this->Client->setIo($Io);
+        $Io = $this->Client->getIo();
+        $this->assertInstanceOf('Goracash\IO\Curl', $Io);
+    }
+
+    public function testAuthenticate()
+    {
+        $configFile = dirname(__FILE__) . '/../testdata/test.ini';
+        $Client = new Client($configFile);
+        $Client->authenticate();
     }
 
     public function testGetBasePath()

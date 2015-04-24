@@ -39,14 +39,11 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
         $result = $Config->getApplicationName();
         $this->assertEquals('My Test application', $result);
 
-        $result = $Config->getAuthClass();
-        $this->assertEquals('Goracash\Auth\Other', $result);
-
         $result = $Config->getClassConfig('Goracash\Service\Authentication', 'client_id');
-        $this->assertEquals('1234.testClientId', $result);
+        $this->assertEquals('2504fc3027fff14c3ba4781b7bddd7b544e66a9c.apps.goracash.local', $result);
 
         $result = $Config->getClassConfig('Goracash\Service\Authentication', 'client_secret');
-        $this->assertEquals('1234.testClientSecret', $result);
+        $this->assertEquals('0e655a0ae7d50be6a0ac2ff85362bfc6a989c4c3', $result);
 
         $result = $Config->getBasePath();
         $this->assertEquals('http://ws.goracash.center.dev', $result);
@@ -68,12 +65,10 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $result);
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
     public function testGetClassConfigInvalidKey()
     {
-        $this->Config->getClassConfig('Goracash\Service\Authentication', 'Not existed key');
+        $result = $this->Config->getClassConfig('Goracash\Service\Authentication', 'Not existed key');
+        $this->assertNull($result);
     }
 
     public function testSetClassConfigStringEmptyValue()

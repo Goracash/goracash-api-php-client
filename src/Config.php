@@ -124,9 +124,10 @@ class Config
         if ($key === null) {
             return $this->configuration['classes'][$class];
         }
-        else {
+        if (isset($this->configuration['classes'][$class][$key])) {
             return $this->configuration['classes'][$class][$key];
         }
+        return null;
     }
 
     /**
