@@ -67,8 +67,12 @@ class Utils
         if (!isset($datetime) || $datetime == '') {
             return false;
         }
-        list($date, $time) = explode(' ', $datetime, 2);
+        $match = explode(' ', $datetime);
+        if (count($match) != 2) {
+            return false;
+        }
 
+        list($date, $time) = $match;
         $is_date = self::is_system_date($date);
         $is_time = self::is_valid_hour($time);
 
@@ -98,7 +102,7 @@ class Utils
     public static function is_out_of_limit($start_date, $end_date, $limit)
     {
         $start_epoch = strtotime($start_date);
-        $limit_epoch = strotime("+{$limit}", $start_epoch);
+        $limit_epoch = strtotime("+{$limit}", $start_epoch);
         $end_epoch = strtotime($end_date);
         return $end_epoch > $limit_epoch;
     }
