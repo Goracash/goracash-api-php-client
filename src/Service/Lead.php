@@ -42,6 +42,10 @@ class Lead extends Service
             throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
+        if ($start_date > $end_date) {
+            throw new Exception('Invalid params: start_date > end_date');
+        }
+
         $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, LeadAcademic::LIMIT_PERIOD);
         if ($is_out_of_limit) {
             throw new Exception('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
@@ -70,6 +74,19 @@ class Lead extends Service
         $response = $this->execute('/' . $id . '/');
         $data = $this->normalize($response);
         return $data['lead'];
+    }
+
+    public function normalizeArray(&$params, array $values, $params_key)
+    {
+        foreach ($values as $key => $value) {
+            $array_key = $params_key . "[" . urlencode($key) . "]";
+            if (is_array($value)) {
+                $this->normalizeArray($params, $value, $array_key);
+                continue;
+            }
+            $params[$array_key] = $value;
+        }
+        unset($params[$params_key]);
     }
 
 }

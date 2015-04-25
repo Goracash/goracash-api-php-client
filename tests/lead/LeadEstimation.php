@@ -17,10 +17,10 @@
  */
 
 use Goracash\Client as Client;
-use Goracash\Service\LeadAcademic as LeadAcademic;
+use Goracash\Service\LeadEstimation as LeadEstimation;
 use Goracash\Utils as Utils;
 
-class LeadAcademicTest extends PHPUnit_Framework_TestCase
+class LeadEstimationTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -29,7 +29,7 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
     public $Client;
 
     /**
-     * @var LeadAcademic
+     * @var LeadEstimation
      */
     public $Service;
 
@@ -38,18 +38,18 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
         $configPath = dirname(__FILE__) . '/../testdata/test.ini';
         $this->Client = new Client($configPath);
         $this->Client->authenticate();
-        $this->Service = new LeadAcademic($this->Client);
+        $this->Service = new LeadEstimation($this->Client);
     }
 
-    public function testGetLevels()
+    public function testGetTypes()
     {
-        $levels = $this->Service->getAvailableLevels();
-        $this->assertInternalType('array', $levels);
-        $this->assertGreaterThan(0, count($levels));
-        foreach ($levels as $level) {
-            $this->assertArrayHasKey('id', $level);
-            $this->assertArrayHasKey('key', $level);
-            $this->assertArrayHasKey('label', $level);
+        $types = $this->Service->getAvailableTypes();
+        $this->assertInternalType('array', $types);
+        $this->assertGreaterThan(0, count($types));
+        foreach ($types as $type) {
+            $this->assertArrayHasKey('id', $type);
+            $this->assertArrayHasKey('key', $type);
+            $this->assertArrayHasKey('label', $type);
         }
     }
 
@@ -62,18 +62,6 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('id', $gender);
             $this->assertArrayHasKey('key', $gender);
             $this->assertArrayHasKey('label', $gender);
-        }
-    }
-
-    public function testGetSubjects()
-    {
-        $subjects = $this->Service->getAvailableSubjects();
-        $this->assertInternalType('array', $subjects);
-        $this->assertGreaterThan(0, count($subjects));
-        foreach ($subjects as $subject) {
-            $this->assertArrayHasKey('id', $subject);
-            $this->assertArrayHasKey('key', $subject);
-            $this->assertArrayHasKey('label', $subject);
         }
     }
 
@@ -95,7 +83,7 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
 
     public function testGetLeads()
     {
-        $leads = $this->Service->getLeads('2013-12-20 00:00:00', '2013-12-25 00:00:00');
+        $leads = $this->Service->getLeads('2014-09-15 00:00:00', '2014-09-20 00:00:00');
         $this->assertInternalType('array', $leads);
         $this->assertGreaterThan(0, count($leads));
         foreach ($leads as $lead) {
@@ -104,8 +92,7 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('status', $lead);
             $this->assertArrayHasKey('status_date', $lead);
             $this->assertArrayHasKey('date', $lead);
-            $this->assertArrayHasKey('level', $lead);
-            $this->assertArrayHasKey('subject', $lead);
+            $this->assertArrayHasKey('type', $lead);
             $this->assertArrayHasKey('payout', $lead);
             $this->assertArrayHasKey('payout_date', $lead);
             $this->assertArrayHasKey('trackers', $lead);
@@ -130,14 +117,13 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
 
     public function testGetLead()
     {
-        $lead = $this->Service->getLead(1574660);
+        $lead = $this->Service->getLead(2201622);
         $this->assertInternalType('array', $lead);
         $this->assertArrayHasKey('id', $lead);
         $this->assertArrayHasKey('status', $lead);
         $this->assertArrayHasKey('status_date', $lead);
         $this->assertArrayHasKey('date', $lead);
-        $this->assertArrayHasKey('level', $lead);
-        $this->assertArrayHasKey('subject', $lead);
+        $this->assertArrayHasKey('type', $lead);
         $this->assertArrayHasKey('payout', $lead);
         $this->assertArrayHasKey('payout_date', $lead);
         $this->assertArrayHasKey('trackers', $lead);
@@ -154,12 +140,11 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'invalid email',
             'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'MATHEMATICS',
-            'level' => '1ST_ES',
+            'type' => 'MASONRY_DEMOLITION',
             'tracker' => 'monTracker',
             'zipcode' => '75006',
             'city' => 'Paris',
+            'description' => 'Je test',
         );
         $this->Service->pushLead($data);
     }
@@ -175,9 +160,8 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'test@test.fr',
             'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'MATHEMATICS',
-            'level' => '1ST_ES',
+            'type' => 'MASONRY_DEMOLITION',
+            'description' => 'Je test',
             'tracker' => 'monTracker',
             'zipcode' => 'invalid zipcode',
             'city' => 'Paris',
@@ -196,9 +180,8 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'test@test.fr',
             'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'MATHEMATICS',
-            'level' => '1ST_ES',
+            'type' => 'MASONRY_DEMOLITION',
+            'description' => 'Je test',
             'tracker' => 'monTracker',
             'zipcode' => '75006',
             'city' => 'Paris',
@@ -209,7 +192,7 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
     /**
      * @expectedException Exception
      */
-    public function testPushLead_InvalidSubject()
+    public function testPushLead_InvalidType()
     {
         $data = array(
             'gender' => 'MONSIEUR',
@@ -217,30 +200,8 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'test@test.fr',
             'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'invalid subject',
-            'level' => '1ST_ES',
-            'tracker' => 'monTracker',
-            'zipcode' => '75006',
-            'city' => 'Paris',
-        );
-        $this->Service->pushLead($data);
-    }
-
-    /**
-     * @expectedException Exception
-     */
-    public function testPushLead_InvalidLevel()
-    {
-        $data = array(
-            'gender' => 'MONSIEUR',
-            'firstname' => 'David',
-            'lastname' => 'P.',
-            'email' => 'test@test.fr',
-            'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'MATHEMATICS',
-            'level' => 'invalid level',
+            'description' => 'Ma description',
+            'type' => 'invalid subject',
             'tracker' => 'monTracker',
             'zipcode' => '75006',
             'city' => 'Paris',
@@ -256,10 +217,9 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'test@test.fr',
             'phone' => '0612345678',
-            'child_name' => 'Julie',
-            'subject' => 'MATHEMATICS',
-            'level' => '1ST_ES',
-            'tracker' => 'monTracker',
+            'type' => 'MASONRY_DEMOLITION',
+            'description' => 'Je test',
+            'tracker' => 'monTracker2',
             'zipcode' => '75006',
             'city' => 'Paris',
         );
@@ -271,17 +231,16 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
 
         $lead = $this->Service->getLead($result);
         $this->assertInternalType('array', $lead);
-        $this->assertEquals('1ere ES', $lead['level']);
-        $this->assertEquals('Mathématiques', $lead['subject']);
+        $this->assertEquals('Maçonnerie - Démolition', $lead['type']);
 
         $this->assertInternalType('array', $lead['trackers']);
         $this->assertGreaterThan(0, count($lead['trackers']));
         $this->assertArrayHasKey('id', $lead['trackers'][0]);
         $this->assertGreaterThan(0, $lead['trackers'][0]['id']);
         $this->assertArrayHasKey('title', $lead['trackers'][0]);
-        $this->assertEquals('monTracker', $lead['trackers'][0]['title']);
+        $this->assertEquals('monTracker2', $lead['trackers'][0]['title']);
         $this->assertArrayHasKey('slug', $lead['trackers'][0]);
-        $this->assertEquals('montracker', $lead['trackers'][0]['slug']);
+        $this->assertEquals('montracker2', $lead['trackers'][0]['slug']);
         $this->assertEquals('En attente', $lead['status']);
 
         $date_ubound = Utils::now();

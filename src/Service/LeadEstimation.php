@@ -21,9 +21,8 @@ namespace Goracash\Service;
 use Goracash\Client as Client;
 use Goracash\Utils as Utils;
 
-class LeadAcademic extends Lead
+class LeadEstimation extends Lead
 {
-
     /**
      * @param Client $Client
      */
@@ -32,28 +31,18 @@ class LeadAcademic extends Lead
         parent::__construct($Client);
 
         $this->version = 'v1';
-        $this->serviceName = 'leadAcademic';
-        $this->servicePath = '/v1/lead/academic/';
+        $this->serviceName = 'leadEstimation';
+        $this->servicePath = '/v1/lead/estimation/';
     }
 
     /**
      * @return array
      */
-    public function getAvailableLevels()
+    public function getAvailableTypes()
     {
-        $response = $this->execute('/levels');
+        $response = $this->execute('/types');
         $data = $this->normalize($response);
-        return $data['levels'];
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableSubjects()
-    {
-        $response = $this->execute('/subjects');
-        $data = $this->normalize($response);
-        return $data['subjects'];
+        return $data['types'];
     }
 
     /**
@@ -91,9 +80,8 @@ class LeadAcademic extends Lead
             'lastname' => '',
             'email' => '',
             'phone' => '',
-            'child_name' => '',
-            'subject' => '',
-            'level' => '',
+            'type' => '',
+            'description' => '',
             'tracker' => '',
             'zipcode' => '',
             'city' => '',
@@ -105,7 +93,7 @@ class LeadAcademic extends Lead
 
     public function checkFormFields(array &$fields)
     {
-        $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'child_name', 'subject', 'level', 'zipcode', 'city');
+        $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'description', 'type', 'zipcode', 'city');
         foreach ($required_fields as $required_field) {
             if (Utils::isEmpty($fields[$required_field])) {
                 throw new Exception('Empty field ' . $required_field);
@@ -126,20 +114,17 @@ class LeadAcademic extends Lead
             'date_ubound' => '',
             'tracker' => 0,
             'trackers' => array(),
-            'level' => '',
-            'levels' => array(),
-            'subject' => '',
-            'subjects' => array(),
+            'type' => '',
+            'types' => array(),
             'status' => '',
-            'limit' => LeadAcademic::LIMIT,
+            'limit' => LeadEstimation::LIMIT,
             'offset' => 0,
         );
         $params = array_merge($available_params, $params);
         $params = array_intersect_key($params, $available_params);
 
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
-        $this->normalizeArray($params, (array)$params['levels'], 'levels');
-        $this->normalizeArray($params, (array)$params['subjects'], 'subjects');
+        $this->normalizeArray($params, (array)$params['types'], 'types');
 
         if ($params['limit'] > LeadAcademic::LIMIT) {
             throw new Exception('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
