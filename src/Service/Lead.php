@@ -21,7 +21,7 @@ namespace Goracash\Service;
 use Goracash\Service as Service;
 use Goracash\Utils as Utils;
 
-class Lead extends Service
+abstract class Lead extends Service
 {
     const LIMIT_PERIOD = '1 week';
     const LIMIT = 50;
@@ -59,6 +59,12 @@ class Lead extends Service
         $data = $this->normalize($response);
         return $data['leads'];
     }
+
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    abstract public function normalizeParams(array &$params);
 
     /**
      * @param $id
