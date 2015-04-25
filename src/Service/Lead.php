@@ -23,6 +23,8 @@ use Goracash\Utils as Utils;
 
 class Lead extends Service
 {
+    const LIMIT_PERIOD = '1 week';
+    const LIMIT = 50;
 
     /**
      * Get leads from specific period

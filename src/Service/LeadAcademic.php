@@ -24,8 +24,6 @@ use Goracash\Utils;
 
 class LeadAcademic extends Lead
 {
-    const LIMIT_PERIOD = '1 week';
-    const LIMIT = 50;
 
     /**
      * @param Client $Client
@@ -144,7 +142,6 @@ class LeadAcademic extends Lead
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
         $this->normalizeArray($params, (array)$params['levels'], 'levels');
         $this->normalizeArray($params, (array)$params['subjects'], 'subjects');
-        $this->normalizeArray($params, (array)$params['statuses'], 'statuses');
 
         if ($params['limit'] > LeadAcademic::LIMIT) {
             throw new Exception('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
