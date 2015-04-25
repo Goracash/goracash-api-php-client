@@ -20,6 +20,7 @@ namespace Goracash\Service;
 
 use Goracash\Client as Client;
 use Goracash\IO\Exception;
+use Goracash\Utils;
 
 class LeadAcademic extends Lead
 {
@@ -59,12 +60,23 @@ class LeadAcademic extends Lead
     }
 
     /**
+     * @return array
+     */
+    public function getAvailableGenders()
+    {
+        $response = $this->execute('/genders');
+        $data = $this->normalize($response);
+        return $data['genders'];
+    }
+
+    /**
      * @param array $fields
      * @return integer
      */
     public function pushLead(array $fields)
     {
         $this->normalizeFormFields($fields);
+        $this->checkFormFields($fields);
         $response = $this->execute('/create', $fields, 'POST');
         $data = $this->normalize($response);
         return $data['id'];
@@ -74,7 +86,7 @@ class LeadAcademic extends Lead
      * @param array $fields
      * @return array
      */
-    public function normalizeFormFields(array $fields)
+    public function normalizeFormFields(array &$fields)
     {
         $available_fields = array(
             'gender' => '',
@@ -90,7 +102,24 @@ class LeadAcademic extends Lead
             'city' => '',
         );
         $fields = array_merge($available_fields, $fields);
-        return array_intersect_key($fields, $available_fields);
+        $fields = array_intersect_key($fields, $available_fields);
+        return $fields;
+    }
+
+    public function checkFormFields(array &$fields)
+    {
+        $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'child_name', 'subject', 'level', 'zipcode', 'city');
+        foreach ($required_fields as $required_field) {
+            if (Utils::isEmpty($fields[$required_field])) {
+                throw new Exception('Empty field ' . $required_field);
+            }
+        }
+        if (!Utils::isEmail($fields['email'])) {
+            throw new Exception('Invalid email');
+        }
+        if (!Utils::isZipcode($fields['zipcode'])) {
+            throw new Exception('Invalid zipcode');
+        }
     }
 
     public function normalizeParams(array &$params)

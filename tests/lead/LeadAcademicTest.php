@@ -52,6 +52,18 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetGenders()
+    {
+        $genders = $this->Service->getAvailableGenders();
+        $this->assertInternalType('array', $genders);
+        $this->assertGreaterThan(0, count($genders));
+        foreach ($genders as $gender) {
+            $this->assertArrayHasKey('id', $gender);
+            $this->assertArrayHasKey('key', $gender);
+            $this->assertArrayHasKey('label', $gender);
+        }
+    }
+
     public function testGetSubjects()
     {
         $subjects = $this->Service->getAvailableSubjects();
@@ -62,6 +74,22 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('key', $subject);
             $this->assertArrayHasKey('label', $subject);
         }
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetLeadsInvalidDateLbound()
+    {
+        $this->Service->getLeads('invalid date', '2013-12-25 00:00:00');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetLeadsInvalidDateUbound()
+    {
+        $this->Service->getLeads('2013-12-20 00:00:00', 'invalid date');
     }
 
     public function testGetLeads()
@@ -83,6 +111,22 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testGetLeadInvalidId()
+    {
+        $this->Service->getLead('invalid params');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetLeadunauthorizedId()
+    {
+        $this->Service->getLead(1000);
+    }
+
     public function testGetLead()
     {
         $lead = $this->Service->getLead(1574660);
@@ -98,4 +142,129 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('trackers', $lead);
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testPushLead_InvalidEmail()
+    {
+        $data = array(
+            'gender' => 'MONSIEUR',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'invalid email',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'MATHEMATICS',
+            'level' => '1ST_ES',
+            'tracker' => 'monTracker',
+            'zipcode' => '75006',
+            'city' => 'Paris',
+        );
+        $this->Service->pushLead($data);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testPushLead_InvalidZipcode()
+    {
+        $data = array(
+            'gender' => 'MONSIEUR',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'test@test.fr',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'MATHEMATICS',
+            'level' => '1ST_ES',
+            'tracker' => 'monTracker',
+            'zipcode' => 'invalid zipcode',
+            'city' => 'Paris',
+        );
+        $this->Service->pushLead($data);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testPushLead_InvalidGender()
+    {
+        $data = array(
+            'gender' => 'invalid gender',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'test@test.fr',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'MATHEMATICS',
+            'level' => '1ST_ES',
+            'tracker' => 'monTracker',
+            'zipcode' => '75006',
+            'city' => 'Paris',
+        );
+        $this->Service->pushLead($data);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testPushLead_InvalidSubject()
+    {
+        $data = array(
+            'gender' => 'MONSIEUR',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'test@test.fr',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'invalid subject',
+            'level' => '1ST_ES',
+            'tracker' => 'monTracker',
+            'zipcode' => '75006',
+            'city' => 'Paris',
+        );
+        $this->Service->pushLead($data);
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testPushLead_InvalidLevel()
+    {
+        $data = array(
+            'gender' => 'MONSIEUR',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'test@test.fr',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'MATHEMATICS',
+            'level' => 'invalid level',
+            'tracker' => 'monTracker',
+            'zipcode' => '75006',
+            'city' => 'Paris',
+        );
+        $this->Service->pushLead($data);
+    }
+
+    public function testPushLead()
+    {
+        $data = array(
+            'gender' => 'MONSIEUR',
+            'firstname' => 'David',
+            'lastname' => 'P.',
+            'email' => 'test@test.fr',
+            'phone' => '0612345678',
+            'child_name' => 'Julie',
+            'subject' => 'MATHEMATICS',
+            'level' => '1ST_ES',
+            'tracker' => 'monTracker',
+            'zipcode' => '75006',
+            'city' => 'Paris',
+        );
+        $result = $this->Service->pushLead($data);
+        $this->assertInternalType('string', $result);
+        $this->assertTrue(is_numeric($result));
+        $this->assertGreaterThan(0, (int)$result);
+    }
 }

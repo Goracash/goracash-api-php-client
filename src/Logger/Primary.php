@@ -112,7 +112,7 @@ abstract class Primary
     protected $allowNewLines = false;
 
     /**
-     * @param Goracash\Client $client  The current Goracash client
+     * @param Client $client  The current Goracash client
      */
     public function __construct(Client $client)
     {
@@ -254,6 +254,7 @@ abstract class Primary
      * @param mixed $level    The log level
      * @param string $message The log message
      * @param array $context  The log context
+     * @return null
      */
     public function log($level, $message, array $context = array())
     {
@@ -267,7 +268,7 @@ abstract class Primary
                 'message' => $message,
                 'context' => $context,
                 'level' => strtoupper($levelName),
-                'datetime' => new DateTime(),
+                'datetime' => new \DateTime(),
             )
         );
 
@@ -372,7 +373,7 @@ abstract class Primary
      *
      * @param  mixed $level   The logging level
      * @return integer $level The normalized level
-     * @throws Goracash\Logger\Exception If $level is invalid
+     * @throws Exception If $level is invalid
      */
     protected function normalizeLevel($level)
     {

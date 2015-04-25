@@ -34,13 +34,13 @@ class Lead extends Service
      */
     public function getLeads($start_date, $end_date, array $params = array())
     {
-        $is_valid_start_date = Utils::is_system_datetime($start_date);
-        $is_valid_end_date = Utils::is_system_datetime($end_date);
+        $is_valid_start_date = Utils::isSystemDatetime($start_date);
+        $is_valid_end_date = Utils::isSystemDatetime($end_date);
         if (!$is_valid_end_date || !$is_valid_start_date) {
             throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
-        $is_out_of_limit = Utils::is_out_of_limit($start_date, $end_date, LeadAcademic::LIMIT_PERIOD);
+        $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, LeadAcademic::LIMIT_PERIOD);
         if ($is_out_of_limit) {
             throw new Exception('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
         }

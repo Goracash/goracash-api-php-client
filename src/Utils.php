@@ -46,23 +46,63 @@ class Utils
      * @param $date
      * @return bool
      */
-    public static function is_system_date($date)
+    public static function isSystemDate($date)
     {
         if (!isset($date) || $date == '') {
             return false;
         }
-        list($year, $month, $day) = explode('-', $date, 3);
+        $match = explode('-', $date);
+        if (count($match) != 3) {
+            return false;
+        }
+        list($year, $month, $day) = $match;
         if ((int)$year == 0 || (int)$month == 0 || (int)$day == 0) {
             return false;
         }
         return checkdate((int)$month, (int)$day, (int)$year);
     }
 
+    public static function normalizeEmail($email)
+    {
+        return strtolower(str_replace(' ', '', trim($email)));
+    }
+
+    /**
+     * @param $text
+     * @return bool
+     */
+    public static function isEmpty($text)
+    {
+        $text = trim($text);
+        $text = str_replace("\r\n", "\n", $text);
+        $text = trim(str_replace("\n", null, $text));
+        return $text == '';
+    }
+
+    /**
+     * @param $email
+     * @return bool
+     */
+    public static function isEmail($email)
+    {
+        $email = static::normalizeEmail($email);
+        return (bool) preg_match('#^[\w][\w.-]*[\w]@[\w.-]+\.[a-zA-Z]{2,6}$#', $email);
+    }
+
+    /**
+     * @param $zipcode
+     * @return bool
+     */
+    public static function isZipcode($zipcode)
+    {
+        return (bool) preg_match('/^((2[A|B])|[0-9]{2})[0-9]{3}$/', $zipcode);
+    }
+
     /**
      * @param $datetime
      * @return bool
      */
-    public static function is_system_datetime($datetime)
+    public static function isSystemDatetime($datetime)
     {
         if (!isset($datetime) || $datetime == '') {
             return false;
@@ -73,8 +113,8 @@ class Utils
         }
 
         list($date, $time) = $match;
-        $is_date = self::is_system_date($date);
-        $is_time = self::is_valid_hour($time);
+        $is_date = static::isSystemDate($date);
+        $is_time = static::isValidHour($time);
 
         return ($is_date && $is_time);
     }
@@ -84,7 +124,7 @@ class Utils
      * @param string $time in H:i format
      * @return boolean
      */
-    public static function is_valid_hour($time)
+    public static function isValidHour($time)
     {
         $result = preg_match('/^([0-9]{1,2}):([0-9]{1,2})(?::([0-9]{1,2}))?$/', $time, $regs);
         if ($result) {
@@ -99,7 +139,7 @@ class Utils
         return $result;
     }
 
-    public static function is_out_of_limit($start_date, $end_date, $limit)
+    public static function isOutOfLimit($start_date, $end_date, $limit)
     {
         $start_epoch = strtotime($start_date);
         $limit_epoch = strtotime("+{$limit}", $start_epoch);
@@ -110,7 +150,7 @@ class Utils
     /**
      * Concatenate paths, making sure there is no double path separator
      **/
-    public static function concat_path()
+    public static function concatPath()
     {
         $args = func_get_args();
         $len = count($args);

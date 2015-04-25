@@ -65,7 +65,7 @@ abstract class Service
         $data['_client_id'] = $this->client->getClientId();
         $data['_access_token'] = $this->client->getAccessToken();
 
-        $url = Utils::concat_path(
+        $url = Utils::concatPath(
             $this->client->getBasePath(), '/',
             $this->servicePath, '/',
             $url
