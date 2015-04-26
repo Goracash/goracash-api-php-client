@@ -229,4 +229,24 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Client::LIBVER, $result);
     }
 
+    public function testSetAuthConfig()
+    {
+        $Client = new Client();
+        $data = array(
+            'client_id' => 'myClientID',
+            'client_secret' => 'myClientSecret',
+        );
+        $Client->setAuthConfig(json_encode($data));
+        $this->assertEquals($data['client_id'], $Client->getClientId());
+        $this->assertEquals($data['client_secret'], $Client->getClientSecret());
+    }
+
+    public function testSetAuthConfigFile()
+    {
+        $Client = new Client();
+        $Client->setAuthConfigFile(dirname(__FILE__) . '/../testdata/test.json');
+        $this->assertEquals('MyGoracashId', $Client->getClientId());
+        $this->assertEquals('MyGoracashSecret', $Client->getClientSecret());
+    }
+
 }

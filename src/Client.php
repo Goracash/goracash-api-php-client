@@ -132,6 +132,34 @@ class Client
     }
 
     /**
+     * Set the auth config from the JSON string provided.
+     * This structure should match the file downloaded from
+     * the "Download JSON" button on in the Google Developer
+     * Console.
+     * @param string $json the configuration json
+     * @throws Exception
+     */
+    public function setAuthConfig($json)
+    {
+        $data = json_decode($json);
+        $this->setClientId($data->client_id);
+        $this->setClientSecret($data->client_secret);
+    }
+
+    /**
+     * Set the auth config from the JSON file in the path
+     * provided. This should match the file downloaded from
+     * the "Download JSON" button on in the Google Developer
+     * Console.
+     * @param string $file the file location of the client json
+     */
+    public function setAuthConfigFile($file)
+    {
+        $this->setAuthConfig(file_get_contents($file));
+    }
+
+
+    /**
      * Retrieve custom configuration for a specific class.
      * @param $class string|object - class or instance of class to retrieve
      * @param $key string optional - key to retrieve
