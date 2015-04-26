@@ -259,6 +259,14 @@ class Client
     }
 
     /**
+     * @return bool
+     */
+    public function hasAuthenticated()
+    {
+        return $this->authenticated;
+    }
+
+    /**
      * Set the application name, this is included in the User-Agent HTTP header.
      * @param string $applicationName
      */

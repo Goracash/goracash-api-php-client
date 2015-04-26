@@ -214,6 +214,8 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $configFile = dirname(__FILE__) . '/../testdata/test.ini';
         $Client = new Client($configFile);
         $Client->authenticate();
+        $result = $Client->hasAuthenticated();
+        $this->assertTrue($result);
     }
 
     public function testGetBasePath()

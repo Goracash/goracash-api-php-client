@@ -82,17 +82,4 @@ abstract class Lead extends Service
         return $data['lead'];
     }
 
-    public function normalizeArray(&$params, array $values, $params_key)
-    {
-        foreach ($values as $key => $value) {
-            $array_key = $params_key . "[" . urlencode($key) . "]";
-            if (is_array($value)) {
-                $this->normalizeArray($params, $value, $array_key);
-                continue;
-            }
-            $params[$array_key] = $value;
-        }
-        unset($params[$params_key]);
-    }
-
 }

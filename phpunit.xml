@@ -14,6 +14,9 @@
         <testsuite name="Goracash General API tests">
             <directory suffix=".php">./tests/general/</directory>
         </testsuite>
+        <testsuite name="Goracash Contact API tests">
+            <directory suffix=".php">./tests/contact/</directory>
+        </testsuite>
         <testsuite name="Goracash Lead API tests">
             <directory suffix=".php">./tests/lead/</directory>
         </testsuite>
