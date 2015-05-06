@@ -217,7 +217,7 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
             'lastname' => 'P.',
             'email' => 'test@test.fr',
             'phone' => '0612345678',
-            'type' => 'MASONRY_DEMOLITION',
+            'type' => 'MASONRY',
             'description' => 'Je test',
             'tracker' => 'monTracker2',
             'zipcode' => '75006',
@@ -231,7 +231,7 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
 
         $lead = $this->Service->getLead($result);
         $this->assertInternalType('array', $lead);
-        $this->assertEquals('Maçonnerie - Démolition', $lead['type']);
+        $this->assertEquals('Maçonnerie', $lead['type']);
 
         $this->assertInternalType('array', $lead['trackers']);
         $this->assertGreaterThan(0, count($lead['trackers']));

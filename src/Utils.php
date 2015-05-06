@@ -99,6 +99,15 @@ class Utils
     }
 
     /**
+     * @params $phone
+     * @return bool
+     */
+    public static function isInternationalNumber($phone)
+    {
+        return (bool) preg_match('/^00([0-9]+)$/', $phone);
+    }
+
+    /**
      * @param $datetime
      * @return bool
      */
