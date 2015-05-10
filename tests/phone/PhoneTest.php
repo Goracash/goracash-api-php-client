@@ -161,5 +161,291 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('already_exist', $callback_status);
     }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesCBStatsInvalidDateLbound()
+    {
+        $this->Service->getPhonesCBStats('invalid date', '2013-12-25 00:00:00');
+    }
 
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesCBStatsInvalidDateUbound()
+    {
+        $this->Service->getPhonesCBStats('2013-12-20 00:00:00', 'invalid date');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesCBStatsOutPeriod()
+    {
+        $this->Service->getPhonesCBStats('2013-12-20 00:00:00', '2014-12-20 00:00:00');
+    }
+
+    public function testGetPhonesCBStats()
+    {
+        $stats = $this->Service->getPhonesCBStats('2014-06-01 00:00:00', '2014-07-01 00:00:00');
+
+        $this->assertInternalType('array', $stats);
+        $this->assertArrayHasKey('global', $stats);
+        $this->assertInternalType('array', $stats['global']);
+        $this->assertArrayHasKey('total', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['total']);
+        $this->assertArrayHasKey('traited', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['traited']);
+        $this->assertArrayHasKey('subscription', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['subscription']);
+        $this->assertArrayHasKey('transaction', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['transaction']);
+        $this->assertArrayHasKey('amount', $stats['global']);
+        $this->assertInternalType('float', $stats['global']['amount']);
+        $this->assertArrayHasKey('callback', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['callback']);
+
+        $this->assertArrayHasKey('phones', $stats);
+        $this->assertInternalType('array', $stats['phones']);
+        $this->assertGreaterThan(0, count($stats['phones']));
+        foreach ($stats['phones'] as $phone_id => $phone_data) {
+            $this->assertInternalType('array', $phone_data);
+
+            $this->assertArrayHasKey('id', $phone_data);
+            $this->assertArrayHasKey('type', $phone_data);
+            $this->assertEquals('Gratuit', $phone_data['type']);
+            $this->assertArrayHasKey('thematic', $phone_data);
+            $this->assertArrayHasKey('market', $phone_data);
+            $this->assertArrayHasKey('value', $phone_data);
+
+            $this->assertArrayHasKey('total', $phone_data);
+            $this->assertInternalType('integer', $phone_data['total']);
+            $this->assertArrayHasKey('traited', $phone_data);
+            $this->assertInternalType('integer', $phone_data['traited']);
+            $this->assertArrayHasKey('subscription', $phone_data);
+            $this->assertInternalType('integer', $phone_data['subscription']);
+            $this->assertArrayHasKey('transaction', $phone_data);
+            $this->assertInternalType('integer', $phone_data['transaction']);
+            $this->assertArrayHasKey('amount', $phone_data);
+            $this->assertArrayHasKey('callback', $phone_data);
+            $this->assertInternalType('integer', $phone_data['callback']);
+        }
+
+        $this->assertArrayHasKey('dates', $stats);
+        $this->assertInternalType('array', $stats['dates']);
+        $this->assertGreaterThan(0, count($stats['dates']));
+        foreach ($stats['dates'] as $date => $date_data) {
+            $this->assertInternalType('array', $date_data);
+            $this->assertArrayHasKey('total', $date_data);
+            $this->assertInternalType('integer', $date_data['total']);
+            $this->assertArrayHasKey('traited', $date_data);
+            $this->assertInternalType('integer', $date_data['traited']);
+            $this->assertArrayHasKey('subscription', $date_data);
+            $this->assertInternalType('integer', $date_data['subscription']);
+            $this->assertArrayHasKey('transaction', $date_data);
+            $this->assertInternalType('integer', $date_data['transaction']);
+            $this->assertArrayHasKey('amount', $date_data);
+            $this->assertArrayHasKey('callback', $date_data);
+            $this->assertInternalType('integer', $date_data['callback']);
+        }
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesAudiotelStatsInvalidDateLbound()
+    {
+        $this->Service->getPhonesAudiotelStats('invalid date', '2013-12-25 00:00:00');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesAudiotelStatsInvalidDateUbound()
+    {
+        $this->Service->getPhonesAudiotelStats('2013-12-20 00:00:00', 'invalid date');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhonesAudiotelStatsOutPeriod()
+    {
+        $this->Service->getPhonesAudiotelStats('2013-12-20 00:00:00', '2014-12-20 00:00:00');
+    }
+
+    public function testGetPhonesAudiotelStats()
+    {
+        $stats = $this->Service->getPhonesAudiotelStats('2014-06-01 00:00:00', '2014-07-01 00:00:00');
+
+        $this->assertInternalType('array', $stats);
+        $this->assertArrayHasKey('global', $stats);
+        $this->assertInternalType('array', $stats['global']);
+        $this->assertArrayHasKey('count', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['count']);
+        $this->assertArrayHasKey('amount', $stats['global']);
+        $this->assertInternalType('float', $stats['global']['amount']);
+        $this->assertArrayHasKey('duration', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['duration']);
+
+        $this->assertArrayHasKey('phones', $stats);
+        $this->assertInternalType('array', $stats['phones']);
+        $this->assertGreaterThan(0, count($stats['phones']));
+        foreach ($stats['phones'] as $phone_id => $phone_data) {
+            $this->assertInternalType('array', $phone_data);
+
+            $this->assertArrayHasKey('id', $phone_data);
+            $this->assertArrayHasKey('type', $phone_data);
+            $this->assertEquals('Payant', $phone_data['type']);
+            $this->assertArrayHasKey('thematic', $phone_data);
+            $this->assertArrayHasKey('market', $phone_data);
+            $this->assertArrayHasKey('value', $phone_data);
+
+            $this->assertArrayHasKey('count', $phone_data);
+            $this->assertInternalType('integer', $phone_data['count']);
+            $this->assertArrayHasKey('amount', $phone_data);
+            $this->assertInternalType('float', $phone_data['amount']);
+            $this->assertArrayHasKey('duration', $phone_data);
+            $this->assertInternalType('integer', $phone_data['duration']);
+        }
+
+        $this->assertArrayHasKey('dates', $stats);
+        $this->assertInternalType('array', $stats['dates']);
+        $this->assertGreaterThan(0, count($stats['dates']));
+        foreach ($stats['dates'] as $date => $date_data) {
+            $this->assertInternalType('array', $date_data);
+            $this->assertArrayHasKey('count', $date_data);
+            $this->assertInternalType('integer', $date_data['count']);
+            $this->assertArrayHasKey('amount', $date_data);
+            $this->assertInternalType('float', $date_data['amount']);
+            $this->assertArrayHasKey('duration', $date_data);
+            $this->assertInternalType('integer', $date_data['duration']);
+        }
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneAudiotelStatsInvalidDateLbound()
+    {
+        $this->Service->getPhoneAudiotelStats('3015937', 'invalid date', '2013-12-25 00:00:00');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneAudiotelStatsInvalidDateUbound()
+    {
+        $this->Service->getPhoneAudiotelStats('3015937', '2013-12-20 00:00:00', 'invalid date');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneAudiotelStatsOutPeriod()
+    {
+        $this->Service->getPhoneAudiotelStats('3015937', '2013-12-20 00:00:00', '2014-12-20 00:00:00');
+    }
+
+    public function testGetPhoneAudiotelStats()
+    {
+        $stats = $this->Service->getPhoneAudiotelStats('0033892780031', '2014-06-01 00:00:00', '2014-07-01 00:00:00');
+
+        $this->assertInternalType('array', $stats);
+        $this->assertArrayHasKey('global', $stats);
+        $this->assertInternalType('array', $stats['global']);
+        $this->assertArrayHasKey('count', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['count']);
+        $this->assertArrayHasKey('amount', $stats['global']);
+        $this->assertInternalType('float', $stats['global']['amount']);
+        $this->assertArrayHasKey('duration', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['duration']);
+
+        $this->assertArrayHasKey('id', $stats);
+        $this->assertArrayHasKey('type', $stats);
+        $this->assertEquals('Payant', $stats['type']);
+        $this->assertArrayHasKey('thematic', $stats);
+        $this->assertArrayHasKey('market', $stats);
+        $this->assertArrayHasKey('value', $stats);
+
+        $this->assertArrayHasKey('dates', $stats);
+        $this->assertGreaterThan(0, count($stats['dates']));
+        foreach ($stats['dates'] as $date => $date_data) {
+            $this->assertInternalType('array', $date_data);
+            $this->assertArrayHasKey('count', $date_data);
+            $this->assertInternalType('integer', $date_data['count']);
+            $this->assertArrayHasKey('amount', $date_data);
+            $this->assertArrayHasKey('duration', $date_data);
+            $this->assertInternalType('integer', $date_data['duration']);
+        }
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneCBStatsInvalidDateLbound()
+    {
+        $this->Service->getPhoneCBStats('3015937', 'invalid date', '2013-12-25 00:00:00');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneCBStatsInvalidDateUbound()
+    {
+        $this->Service->getPhoneCBStats('3015937', '2013-12-20 00:00:00', 'invalid date');
+    }
+
+    /**
+     * @expectedException Exception
+     */
+    public function testGetPhoneCBStatsOutPeriod()
+    {
+        $this->Service->getPhoneCBStats('3015937', '2013-12-20 00:00:00', '2014-12-20 00:00:00');
+    }
+
+    public function testGetPhoneCBStats()
+    {
+        $stats = $this->Service->getPhoneCBStats('0033175752580', '2014-06-01 00:00:00', '2014-07-01 00:00:00');
+
+        $this->assertInternalType('array', $stats);
+        $this->assertArrayHasKey('global', $stats);
+        $this->assertInternalType('array', $stats['global']);
+        $this->assertArrayHasKey('total', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['total']);
+        $this->assertArrayHasKey('traited', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['traited']);
+        $this->assertArrayHasKey('subscription', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['subscription']);
+        $this->assertArrayHasKey('transaction', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['transaction']);
+        $this->assertArrayHasKey('amount', $stats['global']);
+        $this->assertArrayHasKey('callback', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['callback']);
+
+        $this->assertArrayHasKey('id', $stats);
+        $this->assertArrayHasKey('type', $stats);
+        $this->assertEquals('Gratuit', $stats['type']);
+        $this->assertArrayHasKey('thematic', $stats);
+        $this->assertArrayHasKey('market', $stats);
+        $this->assertArrayHasKey('value', $stats);
+
+        $this->assertArrayHasKey('dates', $stats);
+        $this->assertInternalType('array', $stats['dates']);
+        $this->assertGreaterThan(0, count($stats['dates']));
+        foreach ($stats['dates'] as $date => $date_data) {
+            $this->assertInternalType('array', $date_data);
+            $this->assertArrayHasKey('total', $date_data);
+            $this->assertInternalType('integer', $date_data['total']);
+            $this->assertArrayHasKey('traited', $date_data);
+            $this->assertInternalType('integer', $date_data['traited']);
+            $this->assertArrayHasKey('subscription', $date_data);
+            $this->assertInternalType('integer', $date_data['subscription']);
+            $this->assertArrayHasKey('transaction', $date_data);
+            $this->assertInternalType('integer', $date_data['transaction']);
+            $this->assertArrayHasKey('amount', $date_data);
+            $this->assertArrayHasKey('callback', $date_data);
+            $this->assertInternalType('integer', $date_data['callback']);
+        }
+    }
 }

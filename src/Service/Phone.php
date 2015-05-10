@@ -24,6 +24,7 @@ use Goracash\Utils as Utils;
 
 class Phone extends Service
 {
+    const LIMIT_PERIOD = '1 month';
     /**
      * @param Client $Client
      */
@@ -91,6 +92,81 @@ class Phone extends Service
     }
 
     /**
+     * @param $start_date
+     * @param $end_date
+     * @return array
+     * @throws Exception
+     */
+    public function getPhonesAudiotelStats($start_date, $end_date)
+    {
+        $this->check_period($start_date, $end_date);
+
+        $params['date_lbound'] = $start_date;
+        $params['date_ubound'] = $end_date;
+
+        $response = $this->execute('/audiotel_stats', $params);
+        $data = $this->normalize($response);
+        return $data['stats'];
+    }
+
+    /**
+     * @param $phone : Id or number in international format
+     * @param $start_date
+     * @param $end_date
+     * @return array
+     * @throws Exception
+     */
+    public function getPhoneAudiotelStats($phone, $start_date, $end_date)
+    {
+        $this->check_period($start_date, $end_date);
+
+        $params['date_lbound'] = $start_date;
+        $params['date_ubound'] = $end_date;
+
+        $response = $this->execute('/' . $phone . '/audiotel_stats', $params);
+        $data = $this->normalize($response);
+        return $data['stats'];
+    }
+
+    /**
+     * @param $start_date
+     * @param $end_date
+     * @return array
+     * @throws Exception
+     */
+    public function getPhonesCBStats($start_date, $end_date)
+    {
+        $this->check_period($start_date, $end_date);
+
+        $params['date_lbound'] = $start_date;
+        $params['date_ubound'] = $end_date;
+
+        $response = $this->execute('/cb_stats', $params);
+        $data = $this->normalize($response);
+        return $data['stats'];
+    }
+
+    /**
+     * @param $phone : Id or number in international format
+     * @param $start_date
+     * @param $end_date
+     * @return array
+     * @throws Exception
+     */
+    public function getPhoneCBStats($phone, $start_date, $end_date)
+    {
+        $this->check_period($start_date, $end_date);
+
+        $params['date_lbound'] = $start_date;
+        $params['date_ubound'] = $end_date;
+
+        $response = $this->execute('/' . $phone . '/cb_stats', $params);
+        $data = $this->normalize($response);
+        return $data['stats'];
+    }
+
+
+    /**
      * @param $caller string: Caller number in International format
      * @param $number string: Called number in International format
      * @param array $params
@@ -130,6 +206,24 @@ class Phone extends Service
         }
         if (!Utils::isInternationalNumber($params['phone'])) {
             throw new Exception('Invalid params: Phone is not in internation format (ex: 0033175757575)');
+        }
+    }
+
+    public function check_period($start_date, $end_date)
+    {
+        $is_valid_start_date = Utils::isSystemDatetime($start_date);
+        $is_valid_end_date = Utils::isSystemDatetime($end_date);
+        if (!$is_valid_end_date || !$is_valid_start_date) {
+            throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
+        }
+
+        if ($start_date > $end_date) {
+            throw new Exception('Invalid params: start_date > end_date');
+        }
+
+        $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, Phone::LIMIT_PERIOD);
+        if ($is_out_of_limit) {
+            throw new Exception('Invalid params: Period is too large. Available only ' . Phone::LIMIT_PERIOD);
         }
     }
 
