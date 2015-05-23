@@ -93,6 +93,10 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('status_date', $lead);
             $this->assertArrayHasKey('date', $lead);
             $this->assertArrayHasKey('type', $lead);
+            $this->assertInternalType('array', $lead['type']);
+            $this->assertArrayHasKey('id', $lead['type']);
+            $this->assertArrayHasKey('key', $lead['type']);
+            $this->assertArrayHasKey('label', $lead['type']);
             $this->assertArrayHasKey('payout', $lead);
             $this->assertArrayHasKey('payout_date', $lead);
             $this->assertArrayHasKey('trackers', $lead);
@@ -124,6 +128,10 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('status_date', $lead);
         $this->assertArrayHasKey('date', $lead);
         $this->assertArrayHasKey('type', $lead);
+        $this->assertInternalType('array', $lead['type']);
+        $this->assertArrayHasKey('id', $lead['type']);
+        $this->assertArrayHasKey('key', $lead['type']);
+        $this->assertArrayHasKey('label', $lead['type']);
         $this->assertArrayHasKey('payout', $lead);
         $this->assertArrayHasKey('payout_date', $lead);
         $this->assertArrayHasKey('trackers', $lead);
@@ -231,7 +239,7 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
 
         $lead = $this->Service->getLead($result);
         $this->assertInternalType('array', $lead);
-        $this->assertEquals('Maçonnerie', $lead['type']);
+        $this->assertEquals('Maçonnerie', $lead['type']['label']);
 
         $this->assertInternalType('array', $lead['trackers']);
         $this->assertGreaterThan(0, count($lead['trackers']));

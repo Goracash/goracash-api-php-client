@@ -105,7 +105,15 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('status_date', $lead);
             $this->assertArrayHasKey('date', $lead);
             $this->assertArrayHasKey('level', $lead);
+            $this->assertInternalType('array', $lead['level']);
+            $this->assertArrayHasKey('id', $lead['level']);
+            $this->assertArrayHasKey('key', $lead['level']);
+            $this->assertArrayHasKey('label', $lead['level']);
             $this->assertArrayHasKey('subject', $lead);
+            $this->assertInternalType('array', $lead['subject']);
+            $this->assertArrayHasKey('id', $lead['subject']);
+            $this->assertArrayHasKey('key', $lead['subject']);
+            $this->assertArrayHasKey('label', $lead['subject']);
             $this->assertArrayHasKey('payout', $lead);
             $this->assertArrayHasKey('payout_date', $lead);
             $this->assertArrayHasKey('trackers', $lead);
@@ -137,7 +145,15 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('status_date', $lead);
         $this->assertArrayHasKey('date', $lead);
         $this->assertArrayHasKey('level', $lead);
+        $this->assertInternalType('array', $lead['level']);
+        $this->assertArrayHasKey('id', $lead['level']);
+        $this->assertArrayHasKey('key', $lead['level']);
+        $this->assertArrayHasKey('label', $lead['level']);
         $this->assertArrayHasKey('subject', $lead);
+        $this->assertInternalType('array', $lead['subject']);
+        $this->assertArrayHasKey('id', $lead['subject']);
+        $this->assertArrayHasKey('key', $lead['subject']);
+        $this->assertArrayHasKey('label', $lead['subject']);
         $this->assertArrayHasKey('payout', $lead);
         $this->assertArrayHasKey('payout_date', $lead);
         $this->assertArrayHasKey('trackers', $lead);
@@ -271,8 +287,8 @@ class LeadAcademicTest extends PHPUnit_Framework_TestCase
 
         $lead = $this->Service->getLead($result);
         $this->assertInternalType('array', $lead);
-        $this->assertEquals('1ere ES', $lead['level']);
-        $this->assertEquals('Mathématiques', $lead['subject']);
+        $this->assertEquals('1ere ES', $lead['level']['label']);
+        $this->assertEquals('Mathématiques', $lead['subject']['label']);
 
         $this->assertInternalType('array', $lead['trackers']);
         $this->assertGreaterThan(0, count($lead['trackers']));

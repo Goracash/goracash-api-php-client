@@ -106,9 +106,31 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, count($numbers));
         foreach ($numbers as $number) {
             $this->assertArrayHasKey('id', $number);
+
             $this->assertArrayHasKey('type', $number);
+            $this->assertInternalType('array', $number['type']);
+            $this->assertArrayHasKey('id', $number['type']);
+            $this->assertArrayHasKey('key', $number['type']);
+            $this->assertArrayHasKey('label', $number['type']);
+
             $this->assertArrayHasKey('thematic', $number);
+            $this->assertInternalType('array', $number['thematic']);
+            $this->assertArrayHasKey('id', $number['thematic']);
+            $this->assertArrayHasKey('key', $number['thematic']);
+            $this->assertArrayHasKey('label', $number['thematic']);
+
             $this->assertArrayHasKey('market', $number);
+            $this->assertInternalType('array', $number['market']);
+            $this->assertArrayHasKey('id', $number['market']);
+            $this->assertArrayHasKey('key', $number['market']);
+            $this->assertArrayHasKey('label', $number['market']);
+
+            $this->assertArrayHasKey('country', $number);
+            $this->assertInternalType('array', $number['country']);
+            $this->assertArrayHasKey('id', $number['country']);
+            $this->assertArrayHasKey('key', $number['country']);
+            $this->assertArrayHasKey('label', $number['country']);
+
             $this->assertArrayHasKey('value', $number);
         }
     }
@@ -123,10 +145,32 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, count($numbers));
         foreach ($numbers as $number) {
             $this->assertArrayHasKey('id', $number);
+
             $this->assertArrayHasKey('type', $number);
-            $this->assertEquals('Payant', $number['type']);
+            $this->assertInternalType('array', $number['type']);
+            $this->assertArrayHasKey('id', $number['type']);
+            $this->assertArrayHasKey('key', $number['type']);
+            $this->assertArrayHasKey('label', $number['type']);
+            $this->assertEquals('Payant', $number['type']['label']);
+
             $this->assertArrayHasKey('thematic', $number);
+            $this->assertInternalType('array', $number['thematic']);
+            $this->assertArrayHasKey('id', $number['thematic']);
+            $this->assertArrayHasKey('key', $number['thematic']);
+            $this->assertArrayHasKey('label', $number['thematic']);
+
             $this->assertArrayHasKey('market', $number);
+            $this->assertInternalType('array', $number['market']);
+            $this->assertArrayHasKey('id', $number['market']);
+            $this->assertArrayHasKey('key', $number['market']);
+            $this->assertArrayHasKey('label', $number['market']);
+
+            $this->assertArrayHasKey('country', $number);
+            $this->assertInternalType('array', $number['country']);
+            $this->assertArrayHasKey('id', $number['country']);
+            $this->assertArrayHasKey('key', $number['country']);
+            $this->assertArrayHasKey('label', $number['country']);
+
             $this->assertArrayHasKey('value', $number);
         }
     }
@@ -212,11 +256,32 @@ class PhoneTest extends PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $phone_data);
 
             $this->assertArrayHasKey('id', $phone_data);
-            $this->assertArrayHasKey('type', $phone_data);
-            $this->assertEquals('Gratuit', $phone_data['type']);
-            $this->assertArrayHasKey('thematic', $phone_data);
-            $this->assertArrayHasKey('market', $phone_data);
             $this->assertArrayHasKey('value', $phone_data);
+
+            $this->assertArrayHasKey('type', $phone_data);
+            $this->assertInternalType('array', $phone_data['type']);
+            $this->assertArrayHasKey('id', $phone_data['type']);
+            $this->assertArrayHasKey('key', $phone_data['type']);
+            $this->assertArrayHasKey('label', $phone_data['type']);
+            $this->assertEquals('Gratuit', $phone_data['type']['label']);
+
+            $this->assertArrayHasKey('thematic', $phone_data);
+            $this->assertInternalType('array', $phone_data['thematic']);
+            $this->assertArrayHasKey('id', $phone_data['thematic']);
+            $this->assertArrayHasKey('key', $phone_data['thematic']);
+            $this->assertArrayHasKey('label', $phone_data['thematic']);
+
+            $this->assertArrayHasKey('market', $phone_data);
+            $this->assertInternalType('array', $phone_data['market']);
+            $this->assertArrayHasKey('id', $phone_data['market']);
+            $this->assertArrayHasKey('key', $phone_data['market']);
+            $this->assertArrayHasKey('label', $phone_data['market']);
+
+            $this->assertArrayHasKey('country', $phone_data);
+            $this->assertInternalType('array', $phone_data['country']);
+            $this->assertArrayHasKey('id', $phone_data['country']);
+            $this->assertArrayHasKey('key', $phone_data['country']);
+            $this->assertArrayHasKey('label', $phone_data['country']);
 
             $this->assertArrayHasKey('total', $phone_data);
             $this->assertInternalType('integer', $phone_data['total']);
@@ -295,11 +360,32 @@ class PhoneTest extends PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $phone_data);
 
             $this->assertArrayHasKey('id', $phone_data);
-            $this->assertArrayHasKey('type', $phone_data);
-            $this->assertEquals('Payant', $phone_data['type']);
-            $this->assertArrayHasKey('thematic', $phone_data);
-            $this->assertArrayHasKey('market', $phone_data);
             $this->assertArrayHasKey('value', $phone_data);
+
+            $this->assertArrayHasKey('type', $phone_data);
+            $this->assertInternalType('array', $phone_data['type']);
+            $this->assertArrayHasKey('id', $phone_data['type']);
+            $this->assertArrayHasKey('key', $phone_data['type']);
+            $this->assertArrayHasKey('label', $phone_data['type']);
+            $this->assertEquals('Payant', $phone_data['type']['label']);
+
+            $this->assertArrayHasKey('thematic', $phone_data);
+            $this->assertInternalType('array', $phone_data['thematic']);
+            $this->assertArrayHasKey('id', $phone_data['thematic']);
+            $this->assertArrayHasKey('key', $phone_data['thematic']);
+            $this->assertArrayHasKey('label', $phone_data['thematic']);
+
+            $this->assertArrayHasKey('market', $phone_data);
+            $this->assertInternalType('array', $phone_data['market']);
+            $this->assertArrayHasKey('id', $phone_data['market']);
+            $this->assertArrayHasKey('key', $phone_data['market']);
+            $this->assertArrayHasKey('label', $phone_data['market']);
+
+            $this->assertArrayHasKey('country', $phone_data);
+            $this->assertInternalType('array', $phone_data['country']);
+            $this->assertArrayHasKey('id', $phone_data['country']);
+            $this->assertArrayHasKey('key', $phone_data['country']);
+            $this->assertArrayHasKey('label', $phone_data['country']);
 
             $this->assertArrayHasKey('count', $phone_data);
             $this->assertInternalType('integer', $phone_data['count']);
@@ -362,11 +448,32 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $stats['global']['duration']);
 
         $this->assertArrayHasKey('id', $stats);
-        $this->assertArrayHasKey('type', $stats);
-        $this->assertEquals('Payant', $stats['type']);
-        $this->assertArrayHasKey('thematic', $stats);
-        $this->assertArrayHasKey('market', $stats);
         $this->assertArrayHasKey('value', $stats);
+
+        $this->assertArrayHasKey('type', $stats);
+        $this->assertInternalType('array', $stats['type']);
+        $this->assertArrayHasKey('id', $stats['type']);
+        $this->assertArrayHasKey('key', $stats['type']);
+        $this->assertArrayHasKey('label', $stats['type']);
+        $this->assertEquals('Payant', $stats['type']['label']);
+
+        $this->assertArrayHasKey('thematic', $stats);
+        $this->assertInternalType('array', $stats['thematic']);
+        $this->assertArrayHasKey('id', $stats['thematic']);
+        $this->assertArrayHasKey('key', $stats['thematic']);
+        $this->assertArrayHasKey('label', $stats['thematic']);
+
+        $this->assertArrayHasKey('market', $stats);
+        $this->assertInternalType('array', $stats['market']);
+        $this->assertArrayHasKey('id', $stats['market']);
+        $this->assertArrayHasKey('key', $stats['market']);
+        $this->assertArrayHasKey('label', $stats['market']);
+
+        $this->assertArrayHasKey('country', $stats);
+        $this->assertInternalType('array', $stats['country']);
+        $this->assertArrayHasKey('id', $stats['country']);
+        $this->assertArrayHasKey('key', $stats['country']);
+        $this->assertArrayHasKey('label', $stats['country']);
 
         $this->assertArrayHasKey('dates', $stats);
         $this->assertGreaterThan(0, count($stats['dates']));
@@ -424,11 +531,32 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $stats['global']['callback']);
 
         $this->assertArrayHasKey('id', $stats);
-        $this->assertArrayHasKey('type', $stats);
-        $this->assertEquals('Gratuit', $stats['type']);
-        $this->assertArrayHasKey('thematic', $stats);
-        $this->assertArrayHasKey('market', $stats);
         $this->assertArrayHasKey('value', $stats);
+
+        $this->assertArrayHasKey('type', $stats);
+        $this->assertInternalType('array', $stats['type']);
+        $this->assertArrayHasKey('id', $stats['type']);
+        $this->assertArrayHasKey('key', $stats['type']);
+        $this->assertArrayHasKey('label', $stats['type']);
+        $this->assertEquals('Gratuit', $stats['type']['label']);
+
+        $this->assertArrayHasKey('thematic', $stats);
+        $this->assertInternalType('array', $stats['thematic']);
+        $this->assertArrayHasKey('id', $stats['thematic']);
+        $this->assertArrayHasKey('key', $stats['thematic']);
+        $this->assertArrayHasKey('label', $stats['thematic']);
+
+        $this->assertArrayHasKey('country', $stats);
+        $this->assertInternalType('array', $stats['country']);
+        $this->assertArrayHasKey('id', $stats['country']);
+        $this->assertArrayHasKey('key', $stats['country']);
+        $this->assertArrayHasKey('label', $stats['country']);
+
+        $this->assertArrayHasKey('market', $stats);
+        $this->assertInternalType('array', $stats['market']);
+        $this->assertArrayHasKey('id', $stats['market']);
+        $this->assertArrayHasKey('key', $stats['market']);
+        $this->assertArrayHasKey('label', $stats['market']);
 
         $this->assertArrayHasKey('dates', $stats);
         $this->assertInternalType('array', $stats['dates']);
