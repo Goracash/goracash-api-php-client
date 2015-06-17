@@ -238,8 +238,8 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $stats['global']);
         $this->assertArrayHasKey('total', $stats['global']);
         $this->assertInternalType('integer', $stats['global']['total']);
-        $this->assertArrayHasKey('traited', $stats['global']);
-        $this->assertInternalType('integer', $stats['global']['traited']);
+        $this->assertArrayHasKey('treated', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['treated']);
         $this->assertArrayHasKey('subscription', $stats['global']);
         $this->assertInternalType('integer', $stats['global']['subscription']);
         $this->assertArrayHasKey('transaction', $stats['global']);
@@ -285,8 +285,8 @@ class PhoneTest extends PHPUnit_Framework_TestCase
 
             $this->assertArrayHasKey('total', $phone_data);
             $this->assertInternalType('integer', $phone_data['total']);
-            $this->assertArrayHasKey('traited', $phone_data);
-            $this->assertInternalType('integer', $phone_data['traited']);
+            $this->assertArrayHasKey('treated', $phone_data);
+            $this->assertInternalType('integer', $phone_data['treated']);
             $this->assertArrayHasKey('subscription', $phone_data);
             $this->assertInternalType('integer', $phone_data['subscription']);
             $this->assertArrayHasKey('transaction', $phone_data);
@@ -303,8 +303,8 @@ class PhoneTest extends PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $date_data);
             $this->assertArrayHasKey('total', $date_data);
             $this->assertInternalType('integer', $date_data['total']);
-            $this->assertArrayHasKey('traited', $date_data);
-            $this->assertInternalType('integer', $date_data['traited']);
+            $this->assertArrayHasKey('treated', $date_data);
+            $this->assertInternalType('integer', $date_data['treated']);
             $this->assertArrayHasKey('subscription', $date_data);
             $this->assertInternalType('integer', $date_data['subscription']);
             $this->assertArrayHasKey('transaction', $date_data);
@@ -520,8 +520,8 @@ class PhoneTest extends PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $stats['global']);
         $this->assertArrayHasKey('total', $stats['global']);
         $this->assertInternalType('integer', $stats['global']['total']);
-        $this->assertArrayHasKey('traited', $stats['global']);
-        $this->assertInternalType('integer', $stats['global']['traited']);
+        $this->assertArrayHasKey('treated', $stats['global']);
+        $this->assertInternalType('integer', $stats['global']['treated']);
         $this->assertArrayHasKey('subscription', $stats['global']);
         $this->assertInternalType('integer', $stats['global']['subscription']);
         $this->assertArrayHasKey('transaction', $stats['global']);
@@ -565,8 +565,8 @@ class PhoneTest extends PHPUnit_Framework_TestCase
             $this->assertInternalType('array', $date_data);
             $this->assertArrayHasKey('total', $date_data);
             $this->assertInternalType('integer', $date_data['total']);
-            $this->assertArrayHasKey('traited', $date_data);
-            $this->assertInternalType('integer', $date_data['traited']);
+            $this->assertArrayHasKey('treated', $date_data);
+            $this->assertInternalType('integer', $date_data['treated']);
             $this->assertArrayHasKey('subscription', $date_data);
             $this->assertInternalType('integer', $date_data['subscription']);
             $this->assertArrayHasKey('transaction', $date_data);
