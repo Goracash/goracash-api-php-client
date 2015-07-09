@@ -72,6 +72,42 @@ class LeadJuridicalTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testGetAvailablePeriods()
+    {
+        $periods = $this->Service->getAvailablePeriods();
+        $this->assertInternalType('array', $periods);
+        $this->assertGreaterThan(0, count($periods));
+        foreach ($periods as $period) {
+            $this->assertArrayHasKey('id', $period);
+            $this->assertArrayHasKey('key', $period);
+            $this->assertArrayHasKey('label', $period);
+        }
+    }
+
+    public function testGetDeliveries()
+    {
+        $deliveries = $this->Service->getAvailableDeliveries();
+        $this->assertInternalType('array', $deliveries);
+        $this->assertGreaterThan(0, count($deliveries));
+        foreach ($deliveries as $delivery) {
+            $this->assertArrayHasKey('id', $delivery);
+            $this->assertArrayHasKey('key', $delivery);
+            $this->assertArrayHasKey('label', $delivery);
+        }
+    }
+
+    public function testGetContactTypes()
+    {
+        $contact_types = $this->Service->getAvailableContactTypes();
+        $this->assertInternalType('array', $contact_types);
+        $this->assertGreaterThan(0, count($contact_types));
+        foreach ($contact_types as $contact_type) {
+            $this->assertArrayHasKey('id', $contact_type);
+            $this->assertArrayHasKey('key', $contact_type);
+            $this->assertArrayHasKey('label', $contact_type);
+        }
+    }
+
     /**
      * @expectedException Exception
      */
