@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Service as Service;
-use Goracash\Utils as Utils;
 
 abstract class Data extends Service
 {
