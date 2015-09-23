@@ -233,8 +233,7 @@ class LeadEstimationTest extends PHPUnit_Framework_TestCase
         );
         $date_lbound = Utils::now();
         $result = $this->Service->pushLead($data);
-        $this->assertInternalType('string', $result);
-        $this->assertTrue(is_numeric($result));
+        $this->assertInternalType('integer', $result);
         $this->assertGreaterThan(0, (int)$result);
 
         $lead = $this->Service->getLead($result);
