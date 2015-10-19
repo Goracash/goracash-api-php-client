@@ -161,8 +161,8 @@ class LeadJuridical extends Lead
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
         $this->normalizeArray($params, (array)$params['types'], 'types');
 
-        if ($params['limit'] > LeadAcademic::LIMIT) {
-            throw new Exception('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
+        if ($params['limit'] > LeadJuridical::LIMIT) {
+            throw new Exception('Invalid params: Limit is too large. Available only < ' . LeadJuridical::LIMIT);
         }
         return $params;
     }
