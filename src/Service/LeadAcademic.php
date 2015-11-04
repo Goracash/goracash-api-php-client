@@ -103,22 +103,31 @@ class LeadAcademic extends Lead
         return $fields;
     }
 
+    /**
+     * @param array $fields
+     * @throws InvalidArgumentException
+     */
     public function checkFormFields(array &$fields)
     {
         $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'child_name', 'subject', 'level', 'zipcode', 'city');
         foreach ($required_fields as $required_field) {
             if (Utils::isEmpty($fields[$required_field])) {
-                throw new Exception('Empty field ' . $required_field);
+                throw new InvalidArgumentException('Empty field ' . $required_field);
             }
         }
         if (!Utils::isEmail($fields['email'])) {
-            throw new Exception('Invalid email');
+            throw new InvalidArgumentException('Invalid email');
         }
         if (!Utils::isZipcode($fields['zipcode'])) {
-            throw new Exception('Invalid zipcode');
+            throw new InvalidArgumentException('Invalid zipcode');
         }
     }
 
+    /**
+     * @param array $params
+     * @return array
+     * @throws InvalidArgumentException
+     */
     public function normalizeParams(array &$params)
     {
         $available_params = array(
@@ -142,7 +151,7 @@ class LeadAcademic extends Lead
         $this->normalizeArray($params, (array)$params['subjects'], 'subjects');
 
         if ($params['limit'] > LeadAcademic::LIMIT) {
-            throw new Exception('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
         }
         return $params;
     }

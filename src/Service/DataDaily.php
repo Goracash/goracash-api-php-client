@@ -20,7 +20,6 @@ namespace Goracash\Service;
 
 use Goracash\Client as Client;
 use Goracash\Utils as Utils;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class DataDaily extends Data
 {
