@@ -20,7 +20,6 @@ namespace Goracash\Service;
 
 use Goracash\Client as Client;
 use Goracash\Utils as Utils;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class PayoutLead extends Payout
 {
@@ -47,13 +46,19 @@ class PayoutLead extends Payout
         return $data['types'];
     }
 
+    /**
+     * @param null $date
+     * @param array $types
+     * @return array
+     * @throws Exception
+     */
     public function getForEstimations($date = null, array $types = array())
     {
         if (is_null($date)) {
             $date = Utils::now();
         }
         if (!Utils::isSystemDatetime($date)) {
-            throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
+            throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
         $this->normalizeParams($types);
         $response = $this->execute('/estimation', $types);
@@ -61,6 +66,10 @@ class PayoutLead extends Payout
         return $data['payouts'];
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public function normalizeParams(array &$params)
     {
         $available_params = array(

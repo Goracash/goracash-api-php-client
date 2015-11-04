@@ -106,7 +106,7 @@ class Contact extends Service
     /**
      * @param array $params
      * @return array
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function normalizeParams(array &$params)
     {
@@ -131,13 +131,13 @@ class Contact extends Service
         $this->normalizeArray($params, (array)$params['types'], 'types');
 
         if ($params['date_lbound'] && !Utils::isSystemDatetime($params['date_lbound'])) {
-            throw new Exception('Invalid params: date_lbound not in format YYYY-MMM-DD HH:II:SS');
+            throw new InvalidArgumentException('Invalid params: date_lbound not in format YYYY-MMM-DD HH:II:SS');
         }
         if ($params['date_ubound'] && !Utils::isSystemDatetime($params['date_ubound'])) {
-            throw new Exception('Invalid params: date_ubound not in format YYYY-MMM-DD HH:II:SS');
+            throw new InvalidArgumentException('Invalid params: date_ubound not in format YYYY-MMM-DD HH:II:SS');
         }
         if ($params['date_lbound'] && $params['date_ubound'] && $params['date_lbound'] > $params['date_ubound']) {
-            throw new Exception('Invalid params: date_lbound > date_ubound');
+            throw new InvalidArgumentException('Invalid params: date_lbound > date_ubound');
         }
         return $params;
     }
@@ -164,21 +164,21 @@ class Contact extends Service
 
     /**
      * @param array $fields
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function checkFormFields(array &$fields)
     {
         $required_fields = array('gender', 'firstname', 'lastname', 'market', 'thematic');
         foreach ($required_fields as $required_field) {
             if (Utils::isEmpty($fields[$required_field])) {
-                throw new Exception('Empty field ' . $required_field);
+                throw new InvalidArgumentException('Empty field ' . $required_field);
             }
         }
         if (Utils::isEmpty($fields['email']) && Utils::isEmpty($fields['phone'])) {
-            throw new Exception('Empty email & phone');
+            throw new InvalidArgumentException('Empty email & phone');
         }
         if ($fields['email'] && !Utils::isEmail($fields['email'])) {
-            throw new Exception('Invalid email');
+            throw new InvalidArgumentException('Invalid email');
         }
     }
 

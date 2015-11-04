@@ -32,23 +32,23 @@ abstract class Lead extends Service
      * @param $end_date
      * @param $params array
      * @return array
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function getLeads($start_date, $end_date, array $params = array())
     {
         $is_valid_start_date = Utils::isSystemDatetime($start_date);
         $is_valid_end_date = Utils::isSystemDatetime($end_date);
         if (!$is_valid_end_date || !$is_valid_start_date) {
-            throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
+            throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
         if ($start_date > $end_date) {
-            throw new Exception('Invalid params: start_date > end_date');
+            throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
         $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, LeadAcademic::LIMIT_PERIOD);
         if ($is_out_of_limit) {
-            throw new Exception('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
+            throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
         }
 
         $params['date_lbound'] = $start_date;
@@ -69,12 +69,12 @@ abstract class Lead extends Service
     /**
      * @param $id
      * @return array
-     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function getLead($id)
     {
         if (!is_numeric($id)) {
-            throw new Exception('Invalid params: Id of lead is numeric');
+            throw new InvalidArgumentException('Invalid params: Id of lead is numeric');
         }
 
         $response = $this->execute('/' . $id . '/');

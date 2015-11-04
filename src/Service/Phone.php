@@ -131,7 +131,7 @@ class Phone extends Service
     /**
      * @param $start_date
      * @param $end_date
-     * @return array
+     * @return mixed
      * @throws Exception
      */
     public function getPhonesCBStats($start_date, $end_date)
@@ -170,7 +170,7 @@ class Phone extends Service
      * @param $caller string: Caller number in International format
      * @param $number string: Called number in International format
      * @param array $params
-     * @return array
+     * @return mixed
      * @throws Exception
      */
     public function pushCallback($caller, $number, array $params = array())
@@ -184,6 +184,10 @@ class Phone extends Service
         return $data['callback_status'];
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public function normalizeCallbackParams(array &$params)
     {
         $available_params = array(
@@ -199,41 +203,58 @@ class Phone extends Service
         return $params;
     }
 
+    /**
+     * @param array $params
+     * @throws InvalidArgumentException
+     */
     public function checkCallbackParams(array &$params)
     {
         if (!Utils::isInternationalNumber($params['caller'])) {
-            throw new Exception('Invalid params: Caller is not in internation format (ex: 0033175757575)');
+            throw new InvalidArgumentException('Invalid params: Caller is not in internation format (ex: 0033175757575)');
         }
         if (!Utils::isInternationalNumber($params['phone'])) {
-            throw new Exception('Invalid params: Phone is not in internation format (ex: 0033175757575)');
+            throw new InvalidArgumentException('Invalid params: Phone is not in internation format (ex: 0033175757575)');
         }
     }
 
+    /**
+     * @param $start_date
+     * @param $end_date
+     * @throws InvalidArgumentException
+     */
     public function check_period($start_date, $end_date)
     {
         $is_valid_start_date = Utils::isSystemDatetime($start_date);
         $is_valid_end_date = Utils::isSystemDatetime($end_date);
         if (!$is_valid_end_date || !$is_valid_start_date) {
-            throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
+            throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
         if ($start_date > $end_date) {
-            throw new Exception('Invalid params: start_date > end_date');
+            throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
         $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, Phone::LIMIT_PERIOD);
         if ($is_out_of_limit) {
-            throw new Exception('Invalid params: Period is too large. Available only ' . Phone::LIMIT_PERIOD);
+            throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . Phone::LIMIT_PERIOD);
         }
     }
 
+    /**
+     * @param array $params
+     * @throws InvalidArgumentException
+     */
     public function checkParams(array &$params)
     {
         if (!Utils::isEmpty($params['date']) && !Utils::isSystemDate($params['date'])) {
-            throw new Exception('Invalid params: Only system date has available YYYY-MM-DDD');
+            throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD');
         }
     }
 
+    /**
+     * @param array $params
+     * @return array
+     */
     public function normalizeParams(array &$params)
     {
         $available_params = array(
