@@ -40,6 +40,24 @@ abstract class Service
     }
 
     /**
+     * @return string
+     */
+    public function getProtocol()
+    {
+        return array_key_exists('SERVER_PROTOCOL', $_SERVER) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
+    }
+
+    /**
+     * @param $redirectUrl
+     */
+    public function redirectTo($redirectUrl)
+    {
+        header(sprintf('%s 301 Moved Permanently', $this->getProtocol()), true, 301);
+        header('Location: ' . $redirectUrl, true, 301);
+        exit();
+    }
+
+    /**
      * Return the associated Goracash Client
      * @return Client
      */
