@@ -212,7 +212,7 @@ class ContactTest extends PHPUnit_Framework_TestCase
     {
         $num = '0';
         for ($a = 0; $a < 9; $a++) {
-            $num .= rand(0, 9);
+            $num .= (string)rand(0, 9);
         }
         $data = array(
             'gender' => 'MONSIEUR',

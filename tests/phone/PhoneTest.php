@@ -89,7 +89,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Goracash\Service\Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetAttachedNumbers_invalidDate()
     {
@@ -176,7 +176,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Goracash\Service\Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testPushCallback_invalidCaller()
     {
@@ -184,7 +184,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Goracash\Service\Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testPushCallback_invalidNumber()
     {
@@ -206,7 +206,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesCBStatsInvalidDateLbound()
     {
@@ -214,7 +214,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesCBStatsInvalidDateUbound()
     {
@@ -222,7 +222,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesCBStatsOutPeriod()
     {
@@ -316,7 +316,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesAudiotelStatsInvalidDateLbound()
     {
@@ -324,7 +324,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesAudiotelStatsInvalidDateUbound()
     {
@@ -332,7 +332,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhonesAudiotelStatsOutPeriod()
     {
@@ -410,7 +410,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneAudiotelStatsInvalidDateLbound()
     {
@@ -418,7 +418,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneAudiotelStatsInvalidDateUbound()
     {
@@ -426,7 +426,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneAudiotelStatsOutPeriod()
     {
@@ -488,7 +488,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneCBStatsInvalidDateLbound()
     {
@@ -496,7 +496,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneCBStatsInvalidDateUbound()
     {
@@ -504,7 +504,7 @@ class PhoneTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException Goracash\Service\InvalidArgumentException
      */
     public function testGetPhoneCBStatsOutPeriod()
     {

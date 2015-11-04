@@ -104,7 +104,7 @@ class Phone extends Service
         $params['date_lbound'] = $start_date;
         $params['date_ubound'] = $end_date;
 
-        $response = $this->execute('/audiotel_stats', $params);
+        $response = $this->execute('/audiotelStats', $params);
         $data = $this->normalize($response);
         return $data['stats'];
     }
@@ -123,7 +123,7 @@ class Phone extends Service
         $params['date_lbound'] = $start_date;
         $params['date_ubound'] = $end_date;
 
-        $response = $this->execute('/' . $phone . '/audiotel_stats', $params);
+        $response = $this->execute('/' . $phone . '/audiotelStats', $params);
         $data = $this->normalize($response);
         return $data['stats'];
     }
@@ -141,7 +141,7 @@ class Phone extends Service
         $params['date_lbound'] = $start_date;
         $params['date_ubound'] = $end_date;
 
-        $response = $this->execute('/cb_stats', $params);
+        $response = $this->execute('/cbStats', $params);
         $data = $this->normalize($response);
         return $data['stats'];
     }
@@ -160,7 +160,7 @@ class Phone extends Service
         $params['date_lbound'] = $start_date;
         $params['date_ubound'] = $end_date;
 
-        $response = $this->execute('/' . $phone . '/cb_stats', $params);
+        $response = $this->execute('/' . $phone . '/cbStats', $params);
         $data = $this->normalize($response);
         return $data['stats'];
     }

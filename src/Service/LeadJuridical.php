@@ -70,7 +70,7 @@ class LeadJuridical extends Lead
      */
     public function getAvailableContactTypes()
     {
-        $response = $this->execute('/contact_types');
+        $response = $this->execute('/contactTypes');
         $data = $this->normalize($response);
         return $data['contact_types'];
     }
@@ -80,7 +80,7 @@ class LeadJuridical extends Lead
      */
     public function getAvailablePeriods()
     {
-        $response = $this->execute('/available_periods');
+        $response = $this->execute('/availablePeriods');
         $data = $this->normalize($response);
         return $data['available_periods'];
     }
@@ -128,6 +128,7 @@ class LeadJuridical extends Lead
 
     /**
      * @param array $fields
+     * @throws InvalidArgumentException
      */
     public function checkFormFields(array &$fields)
     {
