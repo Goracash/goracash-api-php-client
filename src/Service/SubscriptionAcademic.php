@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Client as Client;
-use Goracash\IO\Exception;
 use Goracash\Utils as Utils;
 
 class SubscriptionAcademic extends Subscription

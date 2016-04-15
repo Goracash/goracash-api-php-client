@@ -158,8 +158,6 @@ class LeadJuridical extends Lead
             'date_ubound' => '',
             'tracker' => 0,
             'trackers' => array(),
-            'type' => '',
-            'types' => array(),
             'status' => '',
             'limit' => LeadJuridical::LIMIT,
             'offset' => 0,
@@ -168,7 +166,6 @@ class LeadJuridical extends Lead
         $params = array_intersect_key($params, $available_params);
 
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
-        $this->normalizeArray($params, (array)$params['types'], 'types');
 
         if ($params['limit'] > LeadJuridical::LIMIT) {
             throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadJuridical::LIMIT);

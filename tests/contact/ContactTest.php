@@ -194,7 +194,7 @@ class ContactTest extends PHPUnit_Framework_TestCase
             'gender' => 'MONSIEUR',
             'firstname' => 'David',
             'lastname' => 'P.',
-            'email' => 'test' . microtime() . '@test.fr',
+            'email' => 'test' . microtime(true) . '@test.fr',
             'phone' => '0600000000',
             'tracker' => 'MyPersonalTracker',
             'market' => 'france',
@@ -210,8 +210,8 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
     public function testPushContactNewPhone()
     {
-        $num = '0';
-        for ($a = 0; $a < 9; $a++) {
+        $num = '01';
+        for ($a = 0; $a < 8; $a++) {
             $num .= (string)rand(0, 9);
         }
         $data = array(

@@ -50,9 +50,10 @@ class LeadJuridicalTest extends PHPUnit_Framework_TestCase
             $this->assertArrayHasKey('id', $type);
             $this->assertArrayHasKey('key', $type);
             $this->assertArrayHasKey('label', $type);
-            $this->assertArrayHasKey('childs', $type);
-            $this->assertInternalType('array', $type['childs']);
-            foreach ($type['childs'] as $subtype) {
+            $this->assertArrayHasKey('children', $type);
+            $this->assertInternalType('array', $type['children']);
+            $this->assertGreaterThan(0, count($type['children']));
+            foreach ($type['children'] as $subtype) {
                 $this->assertArrayHasKey('id', $subtype);
                 $this->assertArrayHasKey('key', $subtype);
                 $this->assertArrayHasKey('label', $subtype);
