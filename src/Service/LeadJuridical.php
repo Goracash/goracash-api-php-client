@@ -159,7 +159,7 @@ class LeadJuridical extends Lead
             'tracker' => 0,
             'trackers' => array(),
             'status' => '',
-            'limit' => LeadJuridical::LIMIT,
+            'limit' => static::LIMIT,
             'offset' => 0,
         );
         $params = array_merge($available_params, $params);
@@ -167,8 +167,8 @@ class LeadJuridical extends Lead
 
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
 
-        if ($params['limit'] > LeadJuridical::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadJuridical::LIMIT);
+        if ($params['limit'] > static::LIMIT) {
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
         }
         return $params;
     }

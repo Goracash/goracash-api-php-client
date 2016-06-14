@@ -140,7 +140,7 @@ class LeadAcademic extends Lead
             'subject' => '',
             'subjects' => array(),
             'status' => '',
-            'limit' => LeadAcademic::LIMIT,
+            'limit' => static::LIMIT,
             'offset' => 0,
         );
         $params = array_merge($available_params, $params);
@@ -150,8 +150,8 @@ class LeadAcademic extends Lead
         $this->normalizeArray($params, (array)$params['levels'], 'levels');
         $this->normalizeArray($params, (array)$params['subjects'], 'subjects');
 
-        if ($params['limit'] > LeadAcademic::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadAcademic::LIMIT);
+        if ($params['limit'] > static::LIMIT) {
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
         }
         return $params;
     }

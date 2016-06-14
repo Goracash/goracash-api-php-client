@@ -125,7 +125,7 @@ class LeadHealthPro extends Lead
             'profession' => '',
             'professions' => array(),
             'status' => '',
-            'limit' => LeadEstimationPro::LIMIT,
+            'limit' => static::LIMIT,
             'offset' => 0,
         );
         $params = array_merge($available_params, $params);
@@ -134,8 +134,8 @@ class LeadHealthPro extends Lead
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
         $this->normalizeArray($params, (array)$params['professions'], 'professions');
 
-        if ($params['limit'] > LeadAcademic::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadEstimationPro::LIMIT);
+        if ($params['limit'] > static::LIMIT) {
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
         }
         return $params;
     }

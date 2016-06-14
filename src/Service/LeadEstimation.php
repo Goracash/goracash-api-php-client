@@ -126,7 +126,7 @@ class LeadEstimation extends Lead
             'type' => '',
             'types' => array(),
             'status' => '',
-            'limit' => LeadEstimation::LIMIT,
+            'limit' => static::LIMIT,
             'offset' => 0,
         );
         $params = array_merge($available_params, $params);
@@ -135,8 +135,8 @@ class LeadEstimation extends Lead
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
         $this->normalizeArray($params, (array)$params['types'], 'types');
 
-        if ($params['limit'] > LeadEstimation::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . LeadEstimation::LIMIT);
+        if ($params['limit'] > static::LIMIT) {
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
         }
         return $params;
     }
