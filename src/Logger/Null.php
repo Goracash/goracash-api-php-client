@@ -23,7 +23,7 @@ namespace Goracash\Logger;
  *
  * This logger simply discards all messages.
  */
-class Null extends Primary
+class NewNameOfClass extends Primary
 {
     /**
      * {@inheritdoc}
