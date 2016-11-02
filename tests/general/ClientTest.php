@@ -198,7 +198,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
     public function testGetLogger()
     {
         $Logger = $this->Client->getLogger();
-        $this->assertInstanceOf('Goracash\Logger\Null', $Logger);
+        $this->assertInstanceOf('Goracash\Logger\Void', $Logger);
     }
 
     public function testSetIo()

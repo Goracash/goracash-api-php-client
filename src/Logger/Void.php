@@ -19,11 +19,11 @@
 namespace Goracash\Logger;
 
 /**
- * Null logger based on the PSR-3 standard.
+ * Void logger based on the PSR-3 standard.
  *
  * This logger simply discards all messages.
  */
-class Null extends Primary
+class Void extends Primary
 {
     /**
      * {@inheritdoc}
