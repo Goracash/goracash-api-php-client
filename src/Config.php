@@ -115,6 +115,7 @@ class Config
         }
         $this->configuration['classes'][$class] = $config;
     }
+
     public function getClassConfig($class, $key = null)
     {
         if (!isset($this->configuration['classes'][$class])) {
@@ -145,13 +146,7 @@ class Config
      */
     public function setLoggerClass($class)
     {
-        $prev = $this->configuration['logger_class'];
-        if (!isset($this->configuration['classes'][$class]) &&
-            isset($this->configuration['classes'][$prev])) {
-            $this->configuration['classes'][$class] =
-                $this->configuration['classes'][$prev];
-        }
-        $this->configuration['logger_class'] = $class;
+        $this->setConfigurationKeyClass('logger_class', $class);
     }
 
     /**
@@ -162,6 +157,7 @@ class Config
     {
         return $this->configuration['auth_class'];
     }
+
     /**
      * Set the auth class.
      *
@@ -169,13 +165,7 @@ class Config
      */
     public function setAuthClass($class)
     {
-        $prev = $this->configuration['auth_class'];
-        if (!isset($this->configuration['classes'][$class]) &&
-            isset($this->configuration['classes'][$prev])) {
-            $this->configuration['classes'][$class] =
-                $this->configuration['classes'][$prev];
-        }
-        $this->configuration['auth_class'] = $class;
+        $this->setConfigurationKeyClass('auth_class', $class);
     }
 
     /**
@@ -185,13 +175,7 @@ class Config
      */
     public function setIoClass($class)
     {
-        $prev = $this->configuration['io_class'];
-        if (!isset($this->configuration['classes'][$class]) &&
-            isset($this->configuration['classes'][$prev])) {
-            $this->configuration['classes'][$class] =
-                $this->configuration['classes'][$prev];
-        }
-        $this->configuration['io_class'] = $class;
+        $this->setConfigurationKeyClass('io_class', $class);
     }
 
     /**
@@ -303,4 +287,20 @@ class Config
         }
         $this->configuration['classes'][$this->getAuthClass()][$key] = $value;
     }
+
+    /**
+     * @param $configurationKey
+     * @param $className
+     */
+    protected function setConfigurationKeyClass($configurationKey, $className)
+    {
+        $prev = $this->configuration[$configurationKey];
+        if (!isset($this->configuration['classes'][$className]) &&
+            isset($this->configuration['classes'][$prev])) {
+            $this->configuration['classes'][$className] =
+                $this->configuration['classes'][$prev];
+        }
+        $this->configuration[$configurationKey] = $className;
+    }
+
 }
