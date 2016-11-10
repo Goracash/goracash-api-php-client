@@ -28,31 +28,31 @@ abstract class Lead extends Service
 
     /**
      * Get leads from specific period
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @param $params array
      * @return array
      * @throws InvalidArgumentException
      */
-    public function getLeads($start_date, $end_date, array $params = array())
+    public function getLeads($startDate, $endDate, array $params = array())
     {
-        $is_valid_start_date = Utils::isSystemDatetime($start_date);
-        $is_valid_end_date = Utils::isSystemDatetime($end_date);
-        if (!$is_valid_end_date || !$is_valid_start_date) {
+        $isValidStartDate = Utils::isSystemDatetime($startDate);
+        $isValidEndDate = Utils::isSystemDatetime($endDate);
+        if (!$isValidEndDate || !$isValidStartDate) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
-        if ($start_date > $end_date) {
+        if ($startDate > $endDate) {
             throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
-        $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, LeadAcademic::LIMIT_PERIOD);
-        if ($is_out_of_limit) {
+        $isOutOfLimit = Utils::isOutOfLimit($startDate, $endDate, LeadAcademic::LIMIT_PERIOD);
+        if ($isOutOfLimit) {
             throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
         }
 
-        $params['date_lbound'] = $start_date;
-        $params['date_ubound'] = $end_date;
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
 
         $this->normalizeParams($params);
         $response = $this->execute('/', $params);
@@ -67,17 +67,17 @@ abstract class Lead extends Service
     abstract public function normalizeParams(array &$params);
 
     /**
-     * @param $id
+     * @param $leadId
      * @return array
      * @throws InvalidArgumentException
      */
-    public function getLead($id)
+    public function getLead($leadId)
     {
-        if (!is_numeric($id)) {
+        if (!is_numeric($leadId)) {
             throw new InvalidArgumentException('Invalid params: Id of lead is numeric');
         }
 
-        $response = $this->execute('/' . $id . '/');
+        $response = $this->execute('/' . $leadId . '/');
         $data = $this->normalize($response);
         return $data['lead'];
     }

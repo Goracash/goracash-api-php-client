@@ -25,11 +25,11 @@ class PayoutLead extends Payout
 {
 
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'PayoutLead';
@@ -72,12 +72,12 @@ class PayoutLead extends Payout
      */
     public function normalizeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'type' => '',
             'types' => array(),
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['types'], 'types');
         return $params;

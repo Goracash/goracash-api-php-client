@@ -36,9 +36,9 @@ class Config
      * local configuration. For example:
      *     application_name="My App"
      *
-     * @param [$ini_file_location] - optional - The location of the ini file to load
+     * @param [$iniFileLocation] - optional - The location of the ini file to load
      */
-    public function __construct($ini_file_location = null)
+    public function __construct($iniFileLocation = null)
     {
         $this->configuration = array(
             // The application_name is included in the User-Agent HTTP header.
@@ -86,14 +86,14 @@ class Config
                 ),
             ),
         );
-        if ($ini_file_location) {
-            $ini = parse_ini_file($ini_file_location, true);
+        if ($iniFileLocation) {
+            $ini = parse_ini_file($iniFileLocation, true);
             if (is_array($ini) && count($ini)) {
-                $merged_configuration = $ini + $this->configuration;
+                $mergedConfiguration = $ini + $this->configuration;
                 if (isset($ini['classes']) && isset($this->configuration['classes'])) {
-                    $merged_configuration['classes'] = $ini['classes'] + $this->configuration['classes'];
+                    $mergedConfiguration['classes'] = $ini['classes'] + $this->configuration['classes'];
                 }
-                $this->configuration = $merged_configuration;
+                $this->configuration = $mergedConfiguration;
             }
         }
     }
@@ -257,14 +257,14 @@ class Config
 
     /**
      * Set the client token for the auth class.
-     * @param $access_token string - the API console client secret
-     * @param $access_token_limit
+     * @param $accessToken string - the API console client secret
+     * @param $accessTokenLimit
      */
-    public function setAccessToken($access_token, $access_token_limit = null)
+    public function setAccessToken($accessToken, $accessTokenLimit = null)
     {
-        $this->setAuthConfig('access_token', $access_token);
-        if ($access_token_limit) {
-            $this->setAuthConfig('access_token_limit', $access_token_limit);
+        $this->setAuthConfig('access_token', $accessToken);
+        if ($accessTokenLimit) {
+            $this->setAuthConfig('access_token_limit', $accessTokenLimit);
         }
     }
 

@@ -101,10 +101,10 @@ class File extends Primary
         $this->trappedErrorNumber = null;
         $this->trappedErrorString = null;
 
-        $old = set_error_handler(array($this, 'trapError'));
+        set_error_handler(array($this, 'trapError'));
 
         $needsChmod = !file_exists($this->file);
-        $fh = fopen($this->file, 'a');
+        $file = fopen($this->file, 'a');
 
         restore_error_handler();
 
@@ -123,7 +123,7 @@ class File extends Primary
             @chmod($this->file, $this->mode & ~umask());
         }
 
-        return $this->file = $fh;
+        return $this->file = $file;
     }
 
     /**

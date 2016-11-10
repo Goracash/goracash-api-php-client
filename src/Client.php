@@ -43,6 +43,11 @@ class Client
     protected $authenticated = false;
 
     /**
+     * @var IO\Primary
+     */
+    protected $io;
+
+    /**
      * Construct the Goracash Client
      *
      * @param $config (Config or string for ini file to load)
@@ -87,12 +92,12 @@ class Client
 
     /**
      * Set the OAuth 2.0 Client Token.
-     * @param string $access_token
-     * @param string $access_token_limit
+     * @param string $accessToken
+     * @param string $accessTokenLimit
      */
-    public function setAccessToken($access_token, $access_token_limit = null)
+    public function setAccessToken($accessToken, $accessTokenLimit = null)
     {
-        $this->config->setAccessToken($access_token, $access_token_limit);
+        $this->config->setAccessToken($accessToken, $accessTokenLimit);
     }
 
     /**
@@ -157,7 +162,6 @@ class Client
     {
         $this->setAuthConfig(file_get_contents($file));
     }
-
 
     /**
      * Retrieve custom configuration for a specific class.
@@ -232,12 +236,12 @@ class Client
 
     /**
      * Set the IO object
-     * @param GoracashIO $io
+     * @param GoracashIO $ioObject
      */
-    public function setIo(GoracashIO $io)
+    public function setIo(GoracashIO $ioObject)
     {
-        $this->config->setIoClass(get_class($io));
-        $this->io = $io;
+        $this->config->setIoClass(get_class($ioObject));
+        $this->io = $ioObject;
     }
 
     /**

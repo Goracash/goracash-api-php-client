@@ -27,6 +27,7 @@ abstract class Primary
      * Default log format
      */
     const DEFAULT_LOG_FORMAT = "[%datetime%] %level%: %message% %context%\n";
+
     /**
      * Default date format
      *

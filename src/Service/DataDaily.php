@@ -27,11 +27,11 @@ class DataDaily extends Data
     const MAX_LIMIT_PERIOD = '+1 day 00:00';
 
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'DataDaily';
@@ -221,7 +221,7 @@ class DataDaily extends Data
      */
     public function normalizeHoroscopeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'date' => '',
             'dates' => array(),
             'sign' => '',
@@ -229,8 +229,8 @@ class DataDaily extends Data
             'lang' => '',
             'langs' => array(),
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['dates'], 'dates');
         $this->normalizeArray($params, (array)$params['signs'], 'signs');
@@ -244,14 +244,14 @@ class DataDaily extends Data
      */
     public function normalizeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'date' => '',
             'dates' => array(),
             'lang' => '',
             'langs' => array(),
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['dates'], 'dates');
         $this->normalizeArray($params, (array)$params['langs'], 'langs');

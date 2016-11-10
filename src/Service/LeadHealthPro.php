@@ -24,11 +24,11 @@ use Goracash\Utils as Utils;
 class LeadHealthPro extends Lead
 {
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'leadHealthPro';
@@ -74,7 +74,7 @@ class LeadHealthPro extends Lead
      */
     public function normalizeFormFields(array &$fields)
     {
-        $available_fields = array(
+        $availableFields = array(
             'title' => '',
             'firstname' => '',
             'lastname' => '',
@@ -85,8 +85,8 @@ class LeadHealthPro extends Lead
             'zipcode' => '',
             'city' => '',
         );
-        $fields = array_merge($available_fields, $fields);
-        $fields = array_intersect_key($fields, $available_fields);
+        $fields = array_merge($availableFields, $fields);
+        $fields = array_intersect_key($fields, $availableFields);
         return $fields;
     }
 
@@ -96,10 +96,10 @@ class LeadHealthPro extends Lead
      */
     public function checkFormFields(array &$fields)
     {
-        $required_fields = array('title', 'firstname', 'lastname', 'email', 'phone', 'profession', 'zipcode', 'city');
-        foreach ($required_fields as $required_field) {
-            if (Utils::isEmpty($fields[$required_field])) {
-                throw new InvalidArgumentException('Empty field ' . $required_field);
+        $requiredFields = array('title', 'firstname', 'lastname', 'email', 'phone', 'profession', 'zipcode', 'city');
+        foreach ($requiredFields as $requiredField) {
+            if (Utils::isEmpty($fields[$requiredField])) {
+                throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
         if (!Utils::isEmail($fields['email'])) {
@@ -117,7 +117,7 @@ class LeadHealthPro extends Lead
      */
     public function normalizeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'date_lbound' => '',
             'date_ubound' => '',
             'tracker' => 0,
@@ -128,8 +128,8 @@ class LeadHealthPro extends Lead
             'limit' => static::LIMIT,
             'offset' => 0,
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
         $this->normalizeArray($params, (array)$params['professions'], 'professions');

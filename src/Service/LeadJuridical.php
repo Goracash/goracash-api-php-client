@@ -24,11 +24,11 @@ use Goracash\Utils as Utils;
 class LeadJuridical extends Lead
 {
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'leadJuridical';
@@ -104,7 +104,7 @@ class LeadJuridical extends Lead
      */
     public function normalizeFormFields(array &$fields)
     {
-        $available_fields = array(
+        $availableFields = array(
             'gender' => '',
             'firstname' => '',
             'lastname' => '',
@@ -121,8 +121,8 @@ class LeadJuridical extends Lead
             'city' => '',
             'tracker' => '',
         );
-        $fields = array_merge($available_fields, $fields);
-        $fields = array_intersect_key($fields, $available_fields);
+        $fields = array_merge($availableFields, $fields);
+        $fields = array_intersect_key($fields, $availableFields);
         return $fields;
     }
 
@@ -132,10 +132,10 @@ class LeadJuridical extends Lead
      */
     public function checkFormFields(array &$fields)
     {
-        $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'description', 'type', 'subtype', 'available_period', 'contact_type', 'delivery', 'zipcode', 'city');
-        foreach ($required_fields as $required_field) {
-            if (Utils::isEmpty($fields[$required_field])) {
-                throw new InvalidArgumentException('Empty field ' . $required_field);
+        $requiredFields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'description', 'type', 'subtype', 'available_period', 'contact_type', 'delivery', 'zipcode', 'city');
+        foreach ($requiredFields as $requiredField) {
+            if (Utils::isEmpty($fields[$requiredField])) {
+                throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
         if (!Utils::isEmail($fields['email'])) {
@@ -153,7 +153,7 @@ class LeadJuridical extends Lead
      */
     public function normalizeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'date_lbound' => '',
             'date_ubound' => '',
             'tracker' => 0,
@@ -162,8 +162,8 @@ class LeadJuridical extends Lead
             'limit' => static::LIMIT,
             'offset' => 0,
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
 

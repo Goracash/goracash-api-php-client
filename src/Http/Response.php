@@ -22,39 +22,56 @@ class Response
 {
     public $url = null;
     public $method = null;
-    public $request_headers = array();
+    public $requestHeaders = array();
 
     public $code = 0;
     public $status = 0;
-    public $content_type = null;
+    public $contentType = null;
     public $headers = array();
     public $body = null;
 
-    public function get_headers()
+    public function getHeaders()
     {
         return $this->headers;
     }
 
-    public function set_request_headers($headers)
+    public function getHeader($name)
+    {
+        $name = static::normalizeHeader($name);
+        if (array_key_exists($name, $this->headers)) {
+            return $this->headers[$name];
+        }
+        return null;
+    }
+
+    public static function normalizeHeader($name)
+    {
+        $s = trim($name);
+        $s = strtr(strtolower($s), '-', ' ');
+        $s = strtr(ucwords($s), ' ', '-');
+        return $s;
+    }
+
+    public function setRequestHeaders($headers)
     {
         $headers = explode("\n", trim($headers));
         // Skip first line
         for ($i = 1, $len = count($headers); $i < $len; $i++) {
             list($name, $value) = explode(':', $headers[$i], 2);
-            $name = self::normalize_header($name);
-            $this->request_headers[$name] = trim($value);
+            $name = self::normalizeHeader($name);
+            $this->requestHeaders[$name] = trim($value);
         }
     }
 
-    public function set_content_type($content_type)
+    public function set_content_type($contentType)
     {
-        $value = explode(';', $content_type);
-        $this->content_type = $value[0];
+        $value = explode(';', $contentType);
+        $this->contentType = $value[0];
     }
 
     public function length()
     {
-        $length = $this->get_header('Content-Length');
+        $length = $this->getHeader('Content-Length');
         if (!$length) {
             $length = strlen($this->body);
         }
@@ -62,5 +79,3 @@ class Response
     }
 
 }
-
-?>

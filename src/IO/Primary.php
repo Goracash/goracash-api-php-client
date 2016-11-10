@@ -25,7 +25,7 @@ abstract class Primary
 {
 
     const UNKNOWN_CODE = 0;
-    private static $CONNECTION_ESTABLISHED_HEADERS = array(
+    private static $connectionEstablishedHeaders = array(
         "HTTP/1.0 200 Connection established\r\n\r\n",
         "HTTP/1.1 200 Connection established\r\n\r\n",
     );
@@ -93,15 +93,15 @@ abstract class Primary
     public function parseHttpResponse($respData, $headerSize)
     {
         // check proxy header
-        foreach (self::$CONNECTION_ESTABLISHED_HEADERS as $established_header) {
-            if (stripos($respData, $established_header) !== false) {
+        foreach (self::$connectionEstablishedHeaders as $establishedHeader) {
+            if (stripos($respData, $establishedHeader) !== false) {
                 // existed, remove it
-                $respData = str_ireplace($established_header, '', $respData);
+                $respData = str_ireplace($establishedHeader, '', $respData);
                 // Subtract the proxy header size unless the cURL bug prior to 7.30.0
                 // is present which prevented the proxy header size from being taken into
                 // account.
                 if (!$this->needsQuirk()) {
-                    $headerSize -= strlen($established_header);
+                    $headerSize -= strlen($establishedHeader);
                 }
                 break;
             }
@@ -155,15 +155,15 @@ abstract class Primary
 
     private function parseArrayHeaders($rawHeaders)
     {
-        $header_count = count($rawHeaders);
+        $headerCount = count($rawHeaders);
         $headers = array();
 
-        for ($i = 0; $i < $header_count; $i++) {
+        for ($i = 0; $i < $headerCount; $i++) {
             $header = $rawHeaders[$i];
             // Times will have colons in - so we just want the first match.
-            $header_parts = explode(': ', $header, 2);
-            if (count($header_parts) == 2) {
-                $headers[strtolower($header_parts[0])] = $header_parts[1];
+            $headerParts = explode(': ', $header, 2);
+            if (count($headerParts) == 2) {
+                $headers[strtolower($headerParts[0])] = $headerParts[1];
             }
         }
 

@@ -24,10 +24,13 @@ use Goracash\Utils;
 
 class Authentication extends Service
 {
-    protected $client_secret;
-    protected $client_id;
+    protected $clientSecret;
+
+    protected $clientId;
+
     protected $token;
-    protected $token_limit;
+
+    protected $tokenLimit;
 
     public function __construct(Client $client)
     {
@@ -37,14 +40,14 @@ class Authentication extends Service
         $this->serviceName = 'Authentication';
         $this->servicePath = '/v1/auth/';
 
-        $this->client_id = $this->client->getClientId();
+        $this->clientId = $this->client->getClientId();
         $this->token = $this->client->getAccessToken();
-        $this->token_limit = $this->client->getAccessTokenLimit();
+        $this->tokenLimit = $this->client->getAccessTokenLimit();
     }
 
     public function getClientId()
     {
-        return $this->client_id;
+        return $this->clientId;
     }
 
     public function authenticate()
@@ -68,12 +71,12 @@ class Authentication extends Service
 
     protected function isAvailableToken($token)
     {
-        if ($this->token_limit > Utils::now()) {
+        if ($this->tokenLimit > Utils::now()) {
             return true;
         }
 
         $params = array();
-        $params['client_id'] = $this->client_id;
+        $params['client_id'] = $this->clientId;
         $params['access_token'] = $token;
 
         $response = $this->execute('checkAccessToken', $params);
@@ -81,10 +84,10 @@ class Authentication extends Service
             $data = $this->normalize($response);
             if ($data['authorized']) {
                 $this->client->setAccessToken($data['access_token'], $data['access_token_limit']);
-                $this->token_limit = $data['limit_date'];
+                $this->tokenLimit = $data['limit_date'];
                 return true;
             }
-            $this->token_limit = '';
+            $this->tokenLimit = '';
             $this->client->setAccessToken('');
             return false;
         }

@@ -26,11 +26,11 @@ class Phone extends Service
 {
     const LIMIT_PERIOD = '1 month';
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'Phone';
@@ -92,17 +92,17 @@ class Phone extends Service
     }
 
     /**
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @return array
      * @throws Exception
      */
-    public function getPhonesAudiotelStats($start_date, $end_date)
+    public function getPhonesAudiotelStats($startDate, $endDate)
     {
-        $this->check_period($start_date, $end_date);
+        $this->checkPeriod($startDate, $endDate);
 
-        $params['date_lbound'] = $start_date;
-        $params['date_ubound'] = $end_date;
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
 
         $response = $this->execute('/audiotelStats', $params);
         $data = $this->normalize($response);
@@ -111,17 +111,17 @@ class Phone extends Service
 
     /**
      * @param $phone : Id or number in international format
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @return array
      * @throws Exception
      */
-    public function getPhoneAudiotelStats($phone, $start_date, $end_date)
+    public function getPhoneAudiotelStats($phone, $startDate, $endDate)
     {
-        $this->check_period($start_date, $end_date);
+        $this->checkPeriod($startDate, $endDate);
 
-        $params['date_lbound'] = $start_date;
-        $params['date_ubound'] = $end_date;
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
 
         $response = $this->execute('/' . $phone . '/audiotelStats', $params);
         $data = $this->normalize($response);
@@ -129,17 +129,17 @@ class Phone extends Service
     }
 
     /**
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @return mixed
      * @throws Exception
      */
-    public function getPhonesCBStats($start_date, $end_date)
+    public function getPhonesCBStats($startDate, $endDate)
     {
-        $this->check_period($start_date, $end_date);
+        $this->checkPeriod($startDate, $endDate);
 
-        $params['date_lbound'] = $start_date;
-        $params['date_ubound'] = $end_date;
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
 
         $response = $this->execute('/cbStats', $params);
         $data = $this->normalize($response);
@@ -148,17 +148,17 @@ class Phone extends Service
 
     /**
      * @param $phone : Id or number in international format
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @return array
      * @throws Exception
      */
-    public function getPhoneCBStats($phone, $start_date, $end_date)
+    public function getPhoneCBStats($phone, $startDate, $endDate)
     {
-        $this->check_period($start_date, $end_date);
+        $this->checkPeriod($startDate, $endDate);
 
-        $params['date_lbound'] = $start_date;
-        $params['date_ubound'] = $end_date;
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
 
         $response = $this->execute('/' . $phone . '/cbStats', $params);
         $data = $this->normalize($response);
@@ -190,7 +190,7 @@ class Phone extends Service
      */
     public function normalizeCallbackParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'caller' => '',
             'phone' => '',
             'gender' => '',
@@ -198,8 +198,8 @@ class Phone extends Service
             'lastname' => '',
             'tracker' => '',
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
         return $params;
     }
 
@@ -218,24 +218,24 @@ class Phone extends Service
     }
 
     /**
-     * @param $start_date
-     * @param $end_date
+     * @param $startDate
+     * @param $endDate
      * @throws InvalidArgumentException
      */
-    public function check_period($start_date, $end_date)
+    public function checkPeriod($startDate, $endDate)
     {
-        $is_valid_start_date = Utils::isSystemDatetime($start_date);
-        $is_valid_end_date = Utils::isSystemDatetime($end_date);
-        if (!$is_valid_end_date || !$is_valid_start_date) {
+        $isValidStartDate = Utils::isSystemDatetime($startDate);
+        $isValidEndDate = Utils::isSystemDatetime($endDate);
+        if (!$isValidEndDate || !$isValidStartDate) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
 
-        if ($start_date > $end_date) {
+        if ($startDate > $endDate) {
             throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
-        $is_out_of_limit = Utils::isOutOfLimit($start_date, $end_date, Phone::LIMIT_PERIOD);
-        if ($is_out_of_limit) {
+        $isOutOfLimit = Utils::isOutOfLimit($startDate, $endDate, Phone::LIMIT_PERIOD);
+        if ($isOutOfLimit) {
             throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . Phone::LIMIT_PERIOD);
         }
     }
@@ -257,7 +257,7 @@ class Phone extends Service
      */
     public function normalizeParams(array &$params)
     {
-        $available_params = array(
+        $availableParams = array(
             'date' => '',
             'market' => 0,
             'markets' => array(),
@@ -268,8 +268,8 @@ class Phone extends Service
             'country' => '',
             'countries' => array(),
         );
-        $params = array_merge($available_params, $params);
-        $params = array_intersect_key($params, $available_params);
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
 
         $this->normalizeArray($params, (array)$params['markets'], 'markets');
         $this->normalizeArray($params, (array)$params['types'], 'types');

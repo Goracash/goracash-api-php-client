@@ -207,7 +207,7 @@ class Request
      * Expected raw response or not.
      * @return boolean expected raw response
      */
-    public function getExpectedRaw()
+    public function hasExpectedRaw()
     {
         return $this->expectedRaw;
     }

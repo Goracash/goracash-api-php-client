@@ -122,10 +122,10 @@ class Utils
         }
 
         list($date, $time) = $match;
-        $is_date = static::isSystemDate($date);
-        $is_time = static::isValidHour($time);
+        $isDate = static::isSystemDate($date);
+        $isTime = static::isValidHour($time);
 
-        return ($is_date && $is_time);
+        return ($isDate && $isTime);
     }
 
     /**
@@ -137,9 +137,9 @@ class Utils
     {
         $result = preg_match('/^([0-9]{1,2}):([0-9]{1,2})(?::([0-9]{1,2}))?$/', $time, $regs);
         if ($result) {
-            $hour    = $regs[1];
+            $hour = $regs[1];
             $minutes = $regs[2];
-            $result  = ($hour >= 0 && $hour < 24) && ($minutes >= 0 && $minutes < 60);
+            $result = ($hour >= 0 && $hour < 24) && ($minutes >= 0 && $minutes < 60);
             if ($result && isset($regs[3])) {
                 $seconds = $regs[3];
                 $result = $seconds >= 0 && $seconds < 60;
@@ -148,12 +148,12 @@ class Utils
         return $result;
     }
 
-    public static function isOutOfLimit($start_date, $end_date, $limit)
+    public static function isOutOfLimit($startDate, $endDate, $limit)
     {
-        $start_epoch = strtotime($start_date);
-        $limit_epoch = strtotime("+{$limit}", $start_epoch);
-        $end_epoch = strtotime($end_date);
-        return $end_epoch > $limit_epoch;
+        $startEpoch = strtotime($startDate);
+        $limitEpoch = strtotime("+{$limit}", $startEpoch);
+        $end_epoch = strtotime($endDate);
+        return $end_epoch > $limitEpoch;
     }
 
     /**

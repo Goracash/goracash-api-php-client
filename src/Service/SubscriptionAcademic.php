@@ -25,11 +25,11 @@ class SubscriptionAcademic extends Subscription
 {
 
     /**
-     * @param Client $Client
+     * @param Client $client
      */
-    public function __construct(Client $Client)
+    public function __construct(Client $client)
     {
-        parent::__construct($Client);
+        parent::__construct($client);
 
         $this->version = 'v1';
         $this->serviceName = 'subscriptionAcademic';
@@ -98,7 +98,7 @@ class SubscriptionAcademic extends Subscription
      */
     public function normalizeFormFields(array &$fields)
     {
-        $available_fields = array(
+        $availableFields = array(
             'gender' => '',
             'firstname' => '',
             'lastname' => '',
@@ -108,15 +108,15 @@ class SubscriptionAcademic extends Subscription
             'offer' => '',
             'tracker' => '',
         );
-        $available_child_fields = array(
+        $availableChildFields = array(
             'firstname' => '',
             'level' => '',
         );
-        $fields = array_merge($available_fields, $fields);
-        $fields = array_intersect_key($fields, $available_fields);
-        foreach ($fields['children'] as $i => $child_fields) {
-            $child_fields = array_merge($available_child_fields, $child_fields);
-            $fields['children'][$i] = array_intersect_key($child_fields, $available_child_fields);
+        $fields = array_merge($availableFields, $fields);
+        $fields = array_intersect_key($fields, $availableFields);
+        foreach ($fields['children'] as $i => $childFields) {
+            $childFields = array_merge($availableChildFields, $childFields);
+            $fields['children'][$i] = array_intersect_key($childFields, $availableChildFields);
         }
         $this->normalizeArray($fields, $fields['children'], 'children');
         return $fields;
@@ -124,10 +124,10 @@ class SubscriptionAcademic extends Subscription
 
     public function checkFormFields(array &$fields)
     {
-        $required_fields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'offer');
-        foreach ($required_fields as $required_field) {
-            if (Utils::isEmpty($fields[$required_field])) {
-                throw new InvalidArgumentException('Empty field ' . $required_field);
+        $requiredFields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'offer');
+        foreach ($requiredFields as $requiredField) {
+            if (Utils::isEmpty($fields[$requiredField])) {
+                throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
         if (!Utils::isEmail($fields['email'])) {
@@ -135,16 +135,16 @@ class SubscriptionAcademic extends Subscription
         }
         $exist = false;
         for ($i = 0; $i < 5; $i++) {
-            $firstname_field = sprintf('children[%s][firstname]', $i);
-            $level_field = sprintf('children[%s][level]', $i);
-            if (!array_key_exists($firstname_field, $fields)) {
+            $firstnameField = sprintf('children[%s][firstname]', $i);
+            $levelField = sprintf('children[%s][level]', $i);
+            if (!array_key_exists($firstnameField, $fields)) {
                 break;
             }
             $exist = true;
-            if (Utils::isEmpty($fields[$firstname_field])) {
+            if (Utils::isEmpty($fields[$firstnameField])) {
                 throw new InvalidArgumentException('Empty child #' . $i . ' field firstname');
             }
-            if (!$fields[$level_field]) {
+            if (!$fields[$levelField]) {
                 throw new InvalidArgumentException('Empty child #' . $i . ' field level');
             }
         }
