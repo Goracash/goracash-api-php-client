@@ -4,4 +4,5 @@ composer.phar
 composer-setup.php
 vendor
 .idea
+build/
 tests/build
