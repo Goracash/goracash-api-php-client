@@ -1,5 +1,14 @@
 # Goracash APIs Client Library for PHP #
 
+[![Code Climate](https://codeclimate.com/github/Goracash/goracash-api-php-client/badges/gpa.svg)](https://codeclimate.com/github/Goracash/goracash-api-php-client)
+[![Test Coverage](https://codeclimate.com/github/Goracash/goracash-api-php-client/badges/coverage.svg)](https://codeclimate.com/github/Goracash/goracash-api-php-client/coverage)
+[![Issue Count](https://codeclimate.com/github/Goracash/goracash-api-php-client/badges/issue_count.svg)](https://codeclimate.com/github/Goracash/goracash-api-php-client)
+[![Latest Stable Version](https://poser.pugx.org/goracash/apiclient/v/stable)](https://packagist.org/packages/goracash/apiclient)
+[![Total Downloads](https://poser.pugx.org/goracash/apiclient/downloads)](https://packagist.org/packages/goracash/apiclient)
+[![Latest Unstable Version](https://poser.pugx.org/goracash/apiclient/v/unstable)](https://packagist.org/packages/goracash/apiclient)
+[![License](https://poser.pugx.org/goracash/apiclient/license)](https://packagist.org/packages/goracash/apiclient)
+
+
 ## Description ##
 The Goracash API Client Library enables you to work with Goracash APIs on your server.
 

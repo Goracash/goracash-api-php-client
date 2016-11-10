@@ -20,7 +20,6 @@ namespace Goracash\Service;
 
 class LeadEstimation extends Lead
 {
-
     public $serviceName = 'leadEstimation';
 
     public $servicePath = '/v1/lead/estimation/';
