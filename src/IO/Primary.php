@@ -138,7 +138,7 @@ abstract class Primary
         $headers = array();
         $responseHeaderLines = explode("\r\n", $rawHeaders);
         foreach ($responseHeaderLines as $headerLine) {
-            if ($headerLine && strpos($headerLine, ':') === false) {
+            if (!$headerLine || strpos($headerLine, ':') === false) {
                 continue;
             }
             list($header, $value) = explode(': ', $headerLine, 2);
