@@ -44,6 +44,32 @@ class LeadJuridical extends Lead
     );
 
     /**
+     * @var array
+     */
+    protected $availableParams = array();
+
+    /**
+     * @var array
+     */
+    protected $availableFields = array(
+        'gender' => '',
+        'firstname' => '',
+        'lastname' => '',
+        'email' => '',
+        'phone' => '',
+        'type' => '',
+        'subtype' => '',
+        'available_period' => '',
+        'contact_type' => '',
+        'is_legal_aid' => '',
+        'delivery' => '',
+        'description' => '',
+        'zipcode' => '',
+        'city' => '',
+        'tracker' => '',
+    );
+
+    /**
      * @return array
      */
     public function getAvailableTypes()
@@ -91,74 +117,6 @@ class LeadJuridical extends Lead
         $response = $this->execute('/availablePeriods');
         $data = $this->normalize($response);
         return $data['available_periods'];
-    }
-
-    /**
-     * @param array $fields
-     * @return integer
-     */
-    public function pushLead(array $fields)
-    {
-        $this->normalizeFormFields($fields);
-        $this->checkFormFields($fields);
-        $response = $this->execute('/create', $fields, 'POST');
-        $data = $this->normalize($response);
-        return $data['id'];
-    }
-
-    /**
-     * @param array $fields
-     * @return array
-     */
-    public function normalizeFormFields(array &$fields)
-    {
-        $availableFields = array(
-            'gender' => '',
-            'firstname' => '',
-            'lastname' => '',
-            'email' => '',
-            'phone' => '',
-            'type' => '',
-            'subtype' => '',
-            'available_period' => '',
-            'contact_type' => '',
-            'is_legal_aid' => '',
-            'delivery' => '',
-            'description' => '',
-            'zipcode' => '',
-            'city' => '',
-            'tracker' => '',
-        );
-        $fields = array_merge($availableFields, $fields);
-        $fields = array_intersect_key($fields, $availableFields);
-        return $fields;
-    }
-
-    /**
-     * @param array $params
-     * @return array
-     * @throws InvalidArgumentException
-     */
-    public function normalizeParams(array &$params)
-    {
-        $availableParams = array(
-            'date_lbound' => '',
-            'date_ubound' => '',
-            'tracker' => 0,
-            'trackers' => array(),
-            'status' => '',
-            'limit' => static::LIMIT,
-            'offset' => 0,
-        );
-        $params = array_merge($availableParams, $params);
-        $params = array_intersect_key($params, $availableParams);
-
-        $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
-
-        if ($params['limit'] > static::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
-        }
-        return $params;
     }
 
 }

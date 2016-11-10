@@ -39,6 +39,29 @@ class LeadHealthPro extends Lead
     );
 
     /**
+     * @var array
+     */
+    protected $availableFields = array(
+        'title' => '',
+        'firstname' => '',
+        'lastname' => '',
+        'email' => '',
+        'phone' => '',
+        'profession' => '',
+        'tracker' => '',
+        'zipcode' => '',
+        'city' => '',
+    );
+
+    /**
+     * @var array
+     */
+    protected $availableParams = array(
+        'profession' => '',
+        'professions' => array(),
+    );
+
+    /**
      * @return array
      */
     public function getAvailableTitles()
@@ -59,67 +82,14 @@ class LeadHealthPro extends Lead
     }
 
     /**
-     * @param array $fields
-     * @return integer
-     */
-    public function pushLead(array $fields)
-    {
-        $this->normalizeFormFields($fields);
-        $this->checkFormFields($fields);
-        $response = $this->execute('/create', $fields, 'POST');
-        $data = $this->normalize($response);
-        return $data['id'];
-    }
-
-    /**
-     * @param array $fields
-     * @return array
-     */
-    public function normalizeFormFields(array &$fields)
-    {
-        $availableFields = array(
-            'title' => '',
-            'firstname' => '',
-            'lastname' => '',
-            'email' => '',
-            'phone' => '',
-            'profession' => '',
-            'tracker' => '',
-            'zipcode' => '',
-            'city' => '',
-        );
-        $fields = array_merge($availableFields, $fields);
-        $fields = array_intersect_key($fields, $availableFields);
-        return $fields;
-    }
-
-    /**
      * @param array $params
      * @return array
      * @throws InvalidArgumentException
      */
     public function normalizeParams(array &$params)
     {
-        $availableParams = array(
-            'date_lbound' => '',
-            'date_ubound' => '',
-            'tracker' => 0,
-            'trackers' => array(),
-            'profession' => '',
-            'professions' => array(),
-            'status' => '',
-            'limit' => static::LIMIT,
-            'offset' => 0,
-        );
-        $params = array_merge($availableParams, $params);
-        $params = array_intersect_key($params, $availableParams);
-
-        $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
+        $params = parent::normalizeParams($params);
         $this->normalizeArray($params, (array)$params['professions'], 'professions');
-
-        if ($params['limit'] > static::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
-        }
         return $params;
     }
 

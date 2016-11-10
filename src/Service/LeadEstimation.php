@@ -40,6 +40,30 @@ class LeadEstimation extends Lead
     );
 
     /**
+     * @var array
+     */
+    protected $availableFields = array(
+        'gender' => '',
+        'firstname' => '',
+        'lastname' => '',
+        'email' => '',
+        'phone' => '',
+        'type' => '',
+        'description' => '',
+        'tracker' => '',
+        'zipcode' => '',
+        'city' => '',
+    );
+
+    /**
+     * @var array
+     */
+    protected $availableParams = array(
+        'type' => '',
+        'types' => array(),
+    );
+
+    /**
      * @return array
      */
     public function getAvailableTypes()
@@ -58,43 +82,7 @@ class LeadEstimation extends Lead
         $data = $this->normalize($response);
         return $data['genders'];
     }
-
-    /**
-     * @param array $fields
-     * @return integer
-     */
-    public function pushLead(array $fields)
-    {
-        $this->normalizeFormFields($fields);
-        $this->checkFormFields($fields);
-        $response = $this->execute('/create', $fields, 'POST');
-        $data = $this->normalize($response);
-        return $data['id'];
-    }
-
-    /**
-     * @param array $fields
-     * @return array
-     */
-    public function normalizeFormFields(array &$fields)
-    {
-        $availableFields = array(
-            'gender' => '',
-            'firstname' => '',
-            'lastname' => '',
-            'email' => '',
-            'phone' => '',
-            'type' => '',
-            'description' => '',
-            'tracker' => '',
-            'zipcode' => '',
-            'city' => '',
-        );
-        $fields = array_merge($availableFields, $fields);
-        $fields = array_intersect_key($fields, $availableFields);
-        return $fields;
-    }
-
+    
     /**
      * @param array $params
      * @return array
@@ -102,26 +90,8 @@ class LeadEstimation extends Lead
      */
     public function normalizeParams(array &$params)
     {
-        $availableParams = array(
-            'date_lbound' => '',
-            'date_ubound' => '',
-            'tracker' => 0,
-            'trackers' => array(),
-            'type' => '',
-            'types' => array(),
-            'status' => '',
-            'limit' => static::LIMIT,
-            'offset' => 0,
-        );
-        $params = array_merge($availableParams, $params);
-        $params = array_intersect_key($params, $availableParams);
-
-        $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
+        $params = parent::normalizeParams($params);
         $this->normalizeArray($params, (array)$params['types'], 'types');
-
-        if ($params['limit'] > static::LIMIT) {
-            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
-        }
         return $params;
     }
 

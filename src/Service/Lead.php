@@ -22,6 +22,10 @@ use Goracash\Service as Service;
 
 abstract class Lead extends Service
 {
+    protected $availableParams = array();
+
+    protected $availableFields = array();
+
     const LIMIT_PERIOD = '1 week';
     
     const LIMIT = 50;
@@ -61,12 +65,6 @@ abstract class Lead extends Service
     }
 
     /**
-     * @param array $params
-     * @return mixed
-     */
-    abstract public function normalizeParams(array &$params);
-
-    /**
      * @param array $fields
      * @throws InvalidArgumentException
      */
@@ -95,6 +93,60 @@ abstract class Lead extends Service
         $response = $this->execute('/' . $leadId . '/');
         $data = $this->normalize($response);
         return $data['lead'];
+    }
+
+    /**
+     * @param array $fields
+     * @return integer
+     */
+    public function pushLead(array $fields)
+    {
+        $this->normalizeFormFields($fields);
+        $this->checkFormFields($fields);
+        $response = $this->execute('/create', $fields, 'POST');
+        $data = $this->normalize($response);
+        return $data['id'];
+    }
+    
+    /**
+     * @param array $fields
+     * @return array
+     */
+    public function normalizeFormFields(array &$fields)
+    {
+        $fields = array_merge($this->availableFields, $fields);
+        $fields = array_intersect_key($fields, $this->availableFields);
+        return $fields;
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     * @throws InvalidArgumentException
+     */
+    protected function normalizeParams(array &$params)
+    {
+        $availableParams = array_merge(
+            array(
+                'date_lbound' => '',
+                'date_ubound' => '',
+                'status' => '',
+                'tracker' => 0,
+                'trackers' => array(),
+                'limit' => static::LIMIT,
+                'offset' => 0,
+            ),
+            $this->availableParams
+        );
+        $params = array_merge($availableParams, $params);
+        $params = array_intersect_key($params, $availableParams);
+
+        $this->normalizeArray($params, (array)$params['trackers'], 'trackers');
+
+        if ($params['limit'] > static::LIMIT) {
+            throw new InvalidArgumentException('Invalid params: Limit is too large. Available only < ' . static::LIMIT);
+        }
+        return $params;
     }
 
 }
