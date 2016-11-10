@@ -152,8 +152,8 @@ class Utils
     {
         $startEpoch = strtotime($startDate);
         $limitEpoch = strtotime("+{$limit}", $startEpoch);
-        $end_epoch = strtotime($endDate);
-        return $end_epoch > $limitEpoch;
+        $endEpoch = strtotime($endDate);
+        return $endEpoch > $limitEpoch;
     }
 
     /**

@@ -43,11 +43,6 @@ class Client
     protected $authenticated = false;
 
     /**
-     * @var IO\Primary
-     */
-    protected $io;
-
-    /**
      * Construct the Goracash Client
      *
      * @param $config (Config or string for ini file to load)

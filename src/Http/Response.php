@@ -46,10 +46,10 @@ class Response
 
     public static function normalizeHeader($name)
     {
-        $s = trim($name);
-        $s = strtr(strtolower($s), '-', ' ');
-        $s = strtr(ucwords($s), ' ', '-');
-        return $s;
+        $name = trim($name);
+        $name = strtr(strtolower($name), '-', ' ');
+        $name = strtr(ucwords($name), ' ', '-');
+        return $name;
     }
 
     public function setRequestHeaders($headers)
@@ -63,7 +63,7 @@ class Response
         }
     }
 
-    public function set_content_type($contentType)
+    public function setContentType($contentType)
     {
         $value = explode(';', $contentType);
         $this->contentType = $value[0];

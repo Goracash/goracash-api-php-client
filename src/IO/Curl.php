@@ -119,7 +119,7 @@ class Curl extends Primary
         $response->headers = $responseHeaders;
         $response->body = $responseBody;
         $response->status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $response->set_content_type(curl_getinfo($curl, CURLINFO_CONTENT_TYPE));
+        $response->setContentType(curl_getinfo($curl, CURLINFO_CONTENT_TYPE));
 
         $this->client->getLogger()->debug(
             'cURL response',
