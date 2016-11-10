@@ -44,7 +44,7 @@ abstract class Service
      */
     public function getProtocol()
     {
-        return array_key_exists('SERVER_PROTOCOL', $_SERVER) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
+        return 'HTTP/1.0';
     }
 
     /**
