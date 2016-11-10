@@ -90,14 +90,11 @@ class Phone extends Service
      */
     public function getPhonesAudiotelStats($startDate, $endDate)
     {
-        $this->checkPeriod($startDate, $endDate);
-
-        $params['date_lbound'] = $startDate;
-        $params['date_ubound'] = $endDate;
-
-        $response = $this->execute('/audiotelStats', $params);
-        $data = $this->normalize($response);
-        return $data['stats'];
+        return $this->getAudiotelStats(
+            '/audiotelStats',
+            $startDate,
+            $endDate
+        );
     }
 
     /**
@@ -109,14 +106,11 @@ class Phone extends Service
      */
     public function getPhoneAudiotelStats($phone, $startDate, $endDate)
     {
-        $this->checkPeriod($startDate, $endDate);
-
-        $params['date_lbound'] = $startDate;
-        $params['date_ubound'] = $endDate;
-
-        $response = $this->execute('/' . $phone . '/audiotelStats', $params);
-        $data = $this->normalize($response);
-        return $data['stats'];
+        return $this->getAudiotelStats(
+            '/' . $phone . '/audiotelStats',
+            $startDate,
+            $endDate
+        );
     }
 
     /**
@@ -269,4 +263,27 @@ class Phone extends Service
 
         return $params;
     }
+    
+    /**
+     * @param $path
+     * @param $startDate
+     * @param $endDate
+     * @return mixed
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
+    protected function getAudiotelStats($path, $startDate, $endDate)
+    {
+        $this->checkPeriod($startDate, $endDate);
+
+        $params = array();
+        $params['date_lbound'] = $startDate;
+        $params['date_ubound'] = $endDate;
+
+        $response = $this->execute($path, $params);
+        $data = $this->normalize($response);
+        return $data['stats'];
+
+    }
+
 }
