@@ -60,7 +60,6 @@ abstract class Service
     {
         header(sprintf('%s 301 Moved Permanently', $this->getProtocol()), true, 301);
         header('Location: ' . $redirectUrl, true, 301);
-        exit();
     }
 
     /**
