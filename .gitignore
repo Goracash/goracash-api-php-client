@@ -1,6 +1,7 @@
 .DS_Store
 composer.lock
 composer.phar
+composer-setup.php
 vendor
 .idea
 tests/build
