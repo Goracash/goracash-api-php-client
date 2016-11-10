@@ -18,22 +18,12 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class PayoutLead extends Payout
 {
 
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
+    public $serviceName = 'PayoutLead';
 
-        $this->version = 'v1';
-        $this->serviceName = 'PayoutLead';
-        $this->servicePath = '/v1/payout/lead/';
-    }
+    public $servicePath = '/v1/payout/lead/';
 
     /**
      * @return array

@@ -18,10 +18,12 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class LeadRefractiveSurgery extends Lead
 {
+    public $serviceName = 'leadRefractiveSurgery';
+
+    public $servicePath = '/v1/lead/refractive_surgery/';
+
     /**
      * @var array
      */
@@ -35,18 +37,6 @@ class LeadRefractiveSurgery extends Lead
         'zipcode',
         'city'
     );
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'leadRefractiveSurgery';
-        $this->servicePath = '/v1/lead/refractive_surgery/';
-    }
 
     /**
      * @return array

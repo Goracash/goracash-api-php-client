@@ -18,10 +18,12 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class LeadJuridical extends Lead
 {
+    public $serviceName = 'leadJuridical';
+
+    public $servicePath = '/v1/lead/juridical/';
+
     /**
      * @var array
      */
@@ -40,18 +42,6 @@ class LeadJuridical extends Lead
         'zipcode',
         'city'
     );
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'leadJuridical';
-        $this->servicePath = '/v1/lead/juridical/';
-    }
 
     /**
      * @return array

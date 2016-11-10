@@ -23,6 +23,10 @@ use Goracash\Client as Client;
 
 class Authentication extends Service
 {
+    public $serviceName = 'Authentication';
+
+    public $servicePath = '/v1/auth/';
+
     protected $clientSecret;
 
     protected $clientId;
@@ -34,10 +38,6 @@ class Authentication extends Service
     public function __construct(Client $client)
     {
         parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'Authentication';
-        $this->servicePath = '/v1/auth/';
 
         $this->clientId = $this->client->getClientId();
         $this->token = $this->client->getAccessToken();

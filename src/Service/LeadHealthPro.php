@@ -18,10 +18,12 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class LeadHealthPro extends Lead
 {
+    public $serviceName = 'leadHealthPro';
+
+    public $servicePath = '/v1/lead/health_pro/';
+
     /**
      * @var array
      */
@@ -35,18 +37,6 @@ class LeadHealthPro extends Lead
         'zipcode',
         'city'
     );
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'leadHealthPro';
-        $this->servicePath = '/v1/lead/health_pro/';
-    }
 
     /**
      * @return array

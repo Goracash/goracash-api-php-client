@@ -19,10 +19,12 @@
 namespace Goracash\Service;
 
 use Goracash\Service as Service;
-use Goracash\Client as Client;
 
 class Contact extends Service
 {
+    public $serviceName = 'contact';
+
+    public $servicePath = '/v1/contact/';
 
     /**
      * @var array
@@ -34,18 +36,6 @@ class Contact extends Service
         'market',
         'thematic'
     );
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'contact';
-        $this->servicePath = '/v1/contact/';
-    }
 
     /**
      * @return array

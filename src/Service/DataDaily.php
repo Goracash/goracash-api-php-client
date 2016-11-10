@@ -18,24 +18,14 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class DataDaily extends Data
 {
+    public $serviceName = 'DataDaily';
+
+    public $servicePath = '/v1/data/daily/';
+
     const MIN_LIMIT_PERIOD = '-1 day 00:00';
     const MAX_LIMIT_PERIOD = '+1 day 00:00';
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
-
-        $this->version = 'v1';
-        $this->serviceName = 'DataDaily';
-        $this->servicePath = '/v1/data/daily/';
-    }
 
     /**
      * @return array

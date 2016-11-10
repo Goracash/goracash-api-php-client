@@ -18,22 +18,12 @@
 
 namespace Goracash\Service;
 
-use Goracash\Client as Client;
-
 class SubscriptionAcademic extends Subscription
 {
 
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
+    public $serviceName = 'subscriptionAcademic';
 
-        $this->version = 'v1';
-        $this->serviceName = 'subscriptionAcademic';
-        $this->servicePath = '/v1/subscription/academic/';
-    }
+    public $servicePath = '/v1/subscription/academic/';
 
     /**
      * @return array

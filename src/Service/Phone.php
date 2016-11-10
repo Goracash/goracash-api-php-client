@@ -19,22 +19,14 @@
 namespace Goracash\Service;
 
 use Goracash\Service as Service;
-use Goracash\Client as Client;
 
 class Phone extends Service
 {
-    const LIMIT_PERIOD = '1 month';
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        parent::__construct($client);
+    public $serviceName = 'Phone';
 
-        $this->version = 'v1';
-        $this->serviceName = 'Phone';
-        $this->servicePath = '/v1/phone/';
-    }
+    public $servicePath = '/v1/phone/';
+
+    const LIMIT_PERIOD = '1 month';
 
     /**
      * @return array

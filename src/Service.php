@@ -25,8 +25,10 @@ use Goracash\Service\Exception;
 abstract class Service
 {
 
-    public $version;
+    public $version = 'v1';
+
     public $serviceName;
+    
     public $servicePath;
 
     /**
