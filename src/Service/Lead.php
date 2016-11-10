@@ -23,6 +23,7 @@ use Goracash\Service as Service;
 abstract class Lead extends Service
 {
     const LIMIT_PERIOD = '1 week';
+    
     const LIMIT = 50;
 
     /**
@@ -64,6 +65,21 @@ abstract class Lead extends Service
      * @return mixed
      */
     abstract public function normalizeParams(array &$params);
+
+    /**
+     * @param array $fields
+     * @throws InvalidArgumentException
+     */
+    public function checkFormFields(array &$fields)
+    {
+        $this->checkRequiredFields($fields);
+        if (!$this->utils->isEmail($fields['email'])) {
+            throw new InvalidArgumentException('Invalid email');
+        }
+        if (!$this->utils->isZipcode($fields['zipcode'])) {
+            throw new InvalidArgumentException('Invalid zipcode');
+        }
+    }
 
     /**
      * @param $leadId

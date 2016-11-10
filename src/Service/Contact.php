@@ -25,6 +25,17 @@ class Contact extends Service
 {
 
     /**
+     * @var array
+     */
+    protected $requiredFields = array(
+        'gender',
+        'firstname',
+        'lastname',
+        'market',
+        'thematic'
+    );
+
+    /**
      * @param Client $client
      */
     public function __construct(Client $client)
@@ -167,12 +178,7 @@ class Contact extends Service
      */
     public function checkFormFields(array &$fields)
     {
-        $requiredFields = array('gender', 'firstname', 'lastname', 'market', 'thematic');
-        foreach ($requiredFields as $requiredField) {
-            if ($this->utils->isEmpty($fields[$requiredField])) {
-                throw new InvalidArgumentException('Empty field ' . $requiredField);
-            }
-        }
+        $this->checkRequiredFields($fields);
         if ($this->utils->isEmpty($fields['email']) && $this->utils->isEmpty($fields['phone'])) {
             throw new InvalidArgumentException('Empty email & phone');
         }

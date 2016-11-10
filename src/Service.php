@@ -39,6 +39,11 @@ abstract class Service
      */
     protected $utils;
 
+    /**
+     * @var array
+     */
+    protected $requiredFields = array();
+
     public function __construct(Client $client)
     {
         $this->client = $client;
@@ -136,4 +141,18 @@ abstract class Service
         }
         unset($params[$paramsKey]);
     }
+
+    /**
+     * @param array $fields
+     * @throws Service\InvalidArgumentException
+     */
+    public function checkRequiredFields(array &$fields)
+    {
+        foreach ($this->requiredFields as $requiredField) {
+            if ($this->utils->isEmpty($fields[$requiredField])) {
+                throw new Service\InvalidArgumentException('Empty field ' . $requiredField);
+            }
+        }
+    }
+    
 }

@@ -23,6 +23,21 @@ use Goracash\Client as Client;
 class LeadEstimation extends Lead
 {
     /**
+     * @var array
+     */
+    protected $requiredFields = array(
+        'gender',
+        'firstname',
+        'lastname',
+        'email',
+        'phone',
+        'description',
+        'type',
+        'zipcode',
+        'city'
+    );
+
+    /**
      * @param Client $client
      */
     public function __construct(Client $client)
@@ -88,26 +103,6 @@ class LeadEstimation extends Lead
         $fields = array_merge($availableFields, $fields);
         $fields = array_intersect_key($fields, $availableFields);
         return $fields;
-    }
-
-    /**
-     * @param array $fields
-     * @throws InvalidArgumentException
-     */
-    public function checkFormFields(array &$fields)
-    {
-        $requiredFields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'description', 'type', 'zipcode', 'city');
-        foreach ($requiredFields as $requiredField) {
-            if ($this->utils->isEmpty($fields[$requiredField])) {
-                throw new InvalidArgumentException('Empty field ' . $requiredField);
-            }
-        }
-        if (!$this->utils->isEmail($fields['email'])) {
-            throw new InvalidArgumentException('Invalid email');
-        }
-        if (!$this->utils->isZipcode($fields['zipcode'])) {
-            throw new InvalidArgumentException('Invalid zipcode');
-        }
     }
 
     /**
