@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Client as Client;
-use Goracash\Utils as Utils;
 
 class SubscriptionAcademic extends Subscription
 {
@@ -126,11 +125,11 @@ class SubscriptionAcademic extends Subscription
     {
         $requiredFields = array('gender', 'firstname', 'lastname', 'email', 'phone', 'offer');
         foreach ($requiredFields as $requiredField) {
-            if (Utils::isEmpty($fields[$requiredField])) {
+            if ($this->utils->isEmpty($fields[$requiredField])) {
                 throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
-        if (!Utils::isEmail($fields['email'])) {
+        if (!$this->utils->isEmail($fields['email'])) {
             throw new InvalidArgumentException('Invalid email');
         }
         $exist = false;
@@ -141,7 +140,7 @@ class SubscriptionAcademic extends Subscription
                 break;
             }
             $exist = true;
-            if (Utils::isEmpty($fields[$firstnameField])) {
+            if ($this->utils->isEmpty($fields[$firstnameField])) {
                 throw new InvalidArgumentException('Empty child #' . $i . ' field firstname');
             }
             if (!$fields[$levelField]) {

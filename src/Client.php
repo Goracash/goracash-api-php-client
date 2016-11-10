@@ -62,11 +62,11 @@ class Client
         }
 
         if ($config->getIoClass() == Config::USE_AUTO_IO_SELECTION) {
+            $ioClass = 'Goracash\IO\Stream';
             if (function_exists('curl_version') && function_exists('curl_exec')) {
-                $config->setIoClass('Goracash\IO\Curl');
-            } else {
-                $config->setIoClass('Goracash\IO\Stream');
+                $ioClass = 'Goracash\IO\Curl';
             }
+            $config->setIoClass($ioClass);
         }
 
         $this->config = $config;

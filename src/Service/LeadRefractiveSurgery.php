@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Client as Client;
-use Goracash\Utils as Utils;
 
 class LeadRefractiveSurgery extends Lead
 {
@@ -88,14 +87,14 @@ class LeadRefractiveSurgery extends Lead
     {
         $requiredFields = array('firstname', 'lastname', 'email', 'phone', 'type', 'birth_date', 'zipcode', 'city');
         foreach ($requiredFields as $requiredField) {
-            if (Utils::isEmpty($fields[$requiredField])) {
+            if ($this->utils->isEmpty($fields[$requiredField])) {
                 throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
-        if (!Utils::isEmail($fields['email'])) {
+        if (!$this->utils->isEmail($fields['email'])) {
             throw new InvalidArgumentException('Invalid email');
         }
-        if (!Utils::isZipcode($fields['zipcode'])) {
+        if (!$this->utils->isZipcode($fields['zipcode'])) {
             throw new InvalidArgumentException('Invalid zipcode');
         }
     }

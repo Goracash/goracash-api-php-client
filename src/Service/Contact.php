@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Service as Service;
-use Goracash\Utils as Utils;
 use Goracash\Client as Client;
 
 class Contact extends Service
@@ -130,10 +129,10 @@ class Contact extends Service
         $this->normalizeArray($params, (array)$params['thematics'], 'thematics');
         $this->normalizeArray($params, (array)$params['types'], 'types');
 
-        if ($params['date_lbound'] && !Utils::isSystemDatetime($params['date_lbound'])) {
+        if ($params['date_lbound'] && !$this->utils->isSystemDatetime($params['date_lbound'])) {
             throw new InvalidArgumentException('Invalid params: date_lbound not in format YYYY-MMM-DD HH:II:SS');
         }
-        if ($params['date_ubound'] && !Utils::isSystemDatetime($params['date_ubound'])) {
+        if ($params['date_ubound'] && !$this->utils->isSystemDatetime($params['date_ubound'])) {
             throw new InvalidArgumentException('Invalid params: date_ubound not in format YYYY-MMM-DD HH:II:SS');
         }
         if ($params['date_lbound'] && $params['date_ubound'] && $params['date_lbound'] > $params['date_ubound']) {
@@ -170,14 +169,14 @@ class Contact extends Service
     {
         $requiredFields = array('gender', 'firstname', 'lastname', 'market', 'thematic');
         foreach ($requiredFields as $requiredField) {
-            if (Utils::isEmpty($fields[$requiredField])) {
+            if ($this->utils->isEmpty($fields[$requiredField])) {
                 throw new InvalidArgumentException('Empty field ' . $requiredField);
             }
         }
-        if (Utils::isEmpty($fields['email']) && Utils::isEmpty($fields['phone'])) {
+        if ($this->utils->isEmpty($fields['email']) && $this->utils->isEmpty($fields['phone'])) {
             throw new InvalidArgumentException('Empty email & phone');
         }
-        if ($fields['email'] && !Utils::isEmail($fields['email'])) {
+        if ($fields['email'] && !$this->utils->isEmail($fields['email'])) {
             throw new InvalidArgumentException('Invalid email');
         }
     }

@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Service as Service;
-use Goracash\Utils as Utils;
 
 abstract class Lead extends Service
 {
@@ -36,8 +35,8 @@ abstract class Lead extends Service
      */
     public function getLeads($startDate, $endDate, array $params = array())
     {
-        $isValidStartDate = Utils::isSystemDatetime($startDate);
-        $isValidEndDate = Utils::isSystemDatetime($endDate);
+        $isValidStartDate = $this->utils->isSystemDatetime($startDate);
+        $isValidEndDate = $this->utils->isSystemDatetime($endDate);
         if (!$isValidEndDate || !$isValidStartDate) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
@@ -46,7 +45,7 @@ abstract class Lead extends Service
             throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
-        $isOutOfLimit = Utils::isOutOfLimit($startDate, $endDate, LeadAcademic::LIMIT_PERIOD);
+        $isOutOfLimit = $this->utils->isOutOfLimit($startDate, $endDate, LeadAcademic::LIMIT_PERIOD);
         if ($isOutOfLimit) {
             throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . LeadAcademic::LIMIT_PERIOD);
         }

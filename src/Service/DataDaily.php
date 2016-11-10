@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Client as Client;
-use Goracash\Utils as Utils;
 
 class DataDaily extends Data
 {
@@ -203,7 +202,7 @@ class DataDaily extends Data
     {
         if (!empty($params['dates'])) {
             foreach ($params['dates'] as $date) {
-                if (!Utils::isSystemDate($date)) {
+                if (!$this->utils->isSystemDate($date)) {
                     throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD');
                 }
                 $epoch = strtotime($date);

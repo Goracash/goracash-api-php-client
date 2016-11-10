@@ -19,7 +19,6 @@
 namespace Goracash\Service;
 
 use Goracash\Client as Client;
-use Goracash\Utils as Utils;
 
 class PayoutLead extends Payout
 {
@@ -49,15 +48,16 @@ class PayoutLead extends Payout
     /**
      * @param null $date
      * @param array $types
-     * @return array
+     * @return mixed
      * @throws Exception
+     * @throws InvalidArgumentException
      */
     public function getForEstimations($date = null, array $types = array())
     {
         if (is_null($date)) {
-            $date = Utils::now();
+            $date = $this->utils->now();
         }
-        if (!Utils::isSystemDatetime($date)) {
+        if (!$this->utils->isSystemDatetime($date)) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
         $this->normalizeParams($types);

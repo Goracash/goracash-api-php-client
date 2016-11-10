@@ -107,14 +107,13 @@ abstract class Primary
             }
         }
 
+        $responseSegments = explode("\r\n\r\n", $respData, 2);
+        $responseHeaders = $responseSegments[0];
+        $responseBody = isset($responseSegments[1]) ? $responseSegments[1] : null;
+
         if ($headerSize) {
             $responseBody = substr($respData, $headerSize);
             $responseHeaders = substr($respData, 0, $headerSize);
-        } else {
-            $responseSegments = explode("\r\n\r\n", $respData, 2);
-            $responseHeaders = $responseSegments[0];
-            $responseBody = isset($responseSegments[1]) ? $responseSegments[1] :
-                null;
         }
 
         $responseHeaders = $this->getHttpResponseHeaders($responseHeaders);
@@ -130,9 +129,8 @@ abstract class Primary
     {
         if (is_array($rawHeaders)) {
             return $this->parseArrayHeaders($rawHeaders);
-        } else {
-            return $this->parseStringHeaders($rawHeaders);
         }
+        return $this->parseStringHeaders($rawHeaders);
     }
 
     private function parseStringHeaders($rawHeaders)
@@ -140,15 +138,16 @@ abstract class Primary
         $headers = array();
         $responseHeaderLines = explode("\r\n", $rawHeaders);
         foreach ($responseHeaderLines as $headerLine) {
-            if ($headerLine && strpos($headerLine, ':') !== false) {
-                list($header, $value) = explode(': ', $headerLine, 2);
-                $header = strtolower($header);
-                if (isset($headers[$header])) {
-                    $headers[$header] .= "\n" . $value;
-                } else {
-                    $headers[$header] = $value;
-                }
+            if ($headerLine && strpos($headerLine, ':') === false) {
+                continue;
             }
+            list($header, $value) = explode(': ', $headerLine, 2);
+            $header = strtolower($header);
+            if (isset($headers[$header])) {
+                $headers[$header] .= "\n" . $value;
+                continue;
+            }
+            $headers[$header] = $value;
         }
         return $headers;
     }

@@ -111,10 +111,9 @@ class Config
                 $this->configuration['classes'][$class] = array();
             }
             $this->configuration['classes'][$class][$config] = $value;
+            return;
         }
-        else {
-            $this->configuration['classes'][$class] = $config;
-        }
+        $this->configuration['classes'][$class] = $config;
     }
     public function getClassConfig($class, $key = null)
     {

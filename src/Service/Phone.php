@@ -20,7 +20,6 @@ namespace Goracash\Service;
 
 use Goracash\Service as Service;
 use Goracash\Client as Client;
-use Goracash\Utils as Utils;
 
 class Phone extends Service
 {
@@ -209,10 +208,10 @@ class Phone extends Service
      */
     public function checkCallbackParams(array &$params)
     {
-        if (!Utils::isInternationalNumber($params['caller'])) {
+        if (!$this->utils->isInternationalNumber($params['caller'])) {
             throw new InvalidArgumentException('Invalid params: Caller is not in internation format (ex: 0033175757575)');
         }
-        if (!Utils::isInternationalNumber($params['phone'])) {
+        if (!$this->utils->isInternationalNumber($params['phone'])) {
             throw new InvalidArgumentException('Invalid params: Phone is not in internation format (ex: 0033175757575)');
         }
     }
@@ -224,8 +223,8 @@ class Phone extends Service
      */
     public function checkPeriod($startDate, $endDate)
     {
-        $isValidStartDate = Utils::isSystemDatetime($startDate);
-        $isValidEndDate = Utils::isSystemDatetime($endDate);
+        $isValidStartDate = $this->utils->isSystemDatetime($startDate);
+        $isValidEndDate = $this->utils->isSystemDatetime($endDate);
         if (!$isValidEndDate || !$isValidStartDate) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD HH:II:SS');
         }
@@ -234,7 +233,7 @@ class Phone extends Service
             throw new InvalidArgumentException('Invalid params: start_date > end_date');
         }
 
-        $isOutOfLimit = Utils::isOutOfLimit($startDate, $endDate, Phone::LIMIT_PERIOD);
+        $isOutOfLimit = $this->utils->isOutOfLimit($startDate, $endDate, Phone::LIMIT_PERIOD);
         if ($isOutOfLimit) {
             throw new InvalidArgumentException('Invalid params: Period is too large. Available only ' . Phone::LIMIT_PERIOD);
         }
@@ -246,7 +245,7 @@ class Phone extends Service
      */
     public function checkParams(array &$params)
     {
-        if (!Utils::isEmpty($params['date']) && !Utils::isSystemDate($params['date'])) {
+        if (!$this->utils->isEmpty($params['date']) && !$this->utils->isSystemDate($params['date'])) {
             throw new InvalidArgumentException('Invalid params: Only system date has available YYYY-MM-DDD');
         }
     }

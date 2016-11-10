@@ -286,21 +286,24 @@ abstract class Primary
     {
         $template = $this->logFormat;
 
+        if (!isset($variables['context'])) {
+            $variables['context'] = '';
+        }
+        $this->reverseJsonInContext($variables['context']);
         if (!$variables['context']) {
             $template = str_replace('%context%', '', $template);
             unset($variables['context']);
-        } else {
-            $this->reverseJsonInContext($variables['context']);
         }
 
         foreach ($variables as $key => $value) {
-            if (strpos($template, '%'. $key .'%') !== false) {
-                $template = str_replace(
-                    '%' . $key . '%',
-                    $this->export($value),
-                    $template
-                );
+            if (strpos($template, '%'. $key .'%') === false) {
+                continue;
             }
+            $template = str_replace(
+                '%' . $key . '%',
+                $this->export($value),
+                $template
+            );
         }
 
         return $template;

@@ -34,9 +34,15 @@ abstract class Service
      */
     protected $client;
 
+    /**
+     * @var Utils
+     */
+    protected $utils;
+
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->utils = new Utils();
     }
 
     /**
@@ -83,7 +89,7 @@ abstract class Service
         $data['_client_id'] = $this->client->getClientId();
         $data['_access_token'] = $this->client->getAccessToken();
 
-        $url = Utils::concatPath(
+        $url = $this->utils->concatPath(
             $this->client->getBasePath(), '/',
             $this->servicePath, '/',
             $url

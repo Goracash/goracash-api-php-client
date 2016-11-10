@@ -20,7 +20,6 @@ namespace Goracash\Service;
 
 use Goracash\Service;
 use Goracash\Client as Client;
-use Goracash\Utils;
 
 class Authentication extends Service
 {
@@ -71,7 +70,7 @@ class Authentication extends Service
 
     protected function isAvailableToken($token)
     {
-        if ($this->tokenLimit > Utils::now()) {
+        if ($this->tokenLimit > $this->utils->now()) {
             return true;
         }
 

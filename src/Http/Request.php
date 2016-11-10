@@ -49,6 +49,11 @@ class Request
     protected $expectedClass;
     protected $expectedRaw = false;
 
+    /**
+     * @var Utils
+     */
+    protected $utils;
+
     public $accessKey;
 
     public function __construct(
@@ -57,6 +62,7 @@ class Request
         $headers = array(),
         $postBody = null
     ) {
+        $this->utils = new Utils();
         $this->setUrl($url);
         $this->setRequestMethod($method);
         $this->setRequestHeaders($headers);
@@ -322,7 +328,7 @@ class Request
      */
     public function setRequestHeaders($headers)
     {
-        $headers = Utils::normalize($headers);
+        $headers = $this->utils->normalize($headers);
         if ($this->requestHeaders) {
             $headers = array_merge($this->requestHeaders, $headers);
         }
@@ -367,9 +373,9 @@ class Request
                     $return[$key] = array($return[$key]);
                 }
                 $return[$key][] = $value;
-            } else {
-                $return[$key] = $value;
+                continue;
             }
+            $return[$key] = $value;
         }
         return $return;
     }
@@ -388,9 +394,9 @@ class Request
                 foreach ($value as $v) {
                     $return[] = urlencode($key) . "=" . urlencode($v);
                 }
-            } else {
-                $return[] = urlencode($key) . "=" . urlencode($value);
+                continue;
             }
+            $return[] = urlencode($key) . "=" . urlencode($value);
         }
         return implode('&', $return);
     }
