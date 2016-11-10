@@ -103,7 +103,13 @@ abstract class Service
         $data = (array)json_decode($response->body, true);
         if (!$data || $data['status'] != 'ok') {
             $this->client->getLogger()->error('Service error:', $data);
-            throw new Exception($data['message']);
+            if (isset($data['message'])) {
+                throw new Exception($data['message']);
+            }
+            if (isset($data['errors'][0])) {
+                throw new Exception($data['errors'][0]);
+            }
+            throw new Exception($response->body);
         }
         return $data;
     }
