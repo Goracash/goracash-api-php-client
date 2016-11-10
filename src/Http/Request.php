@@ -290,26 +290,41 @@ class Request
      */
     public function setUrl($url)
     {
-        if (substr($url, 0, 4) != 'http') {
-            // Force the path become relative.
-            if (substr($url, 0, 1) !== '/') {
-                $url = '/' . $url;
-            }
-        }
+        $url = $this->normalizeUrl($url);
         $parts = parse_url($url);
         if (isset($parts['host'])) {
-            $this->baseComponent = sprintf(
-                "%s%s%s",
-                isset($parts['scheme']) ? $parts['scheme'] . "://" : '',
-                isset($parts['host']) ? $parts['host'] : '',
-                isset($parts['port']) ? ":" . $parts['port'] : ''
-            );
+            $this->computeBaseComponent($parts);
         }
         $this->path = isset($parts['path']) ? $parts['path'] : '';
         $this->queryParams = array();
         if (isset($parts['query'])) {
             $this->queryParams = $this->parseQuery($parts['query']);
         }
+    }
+
+    /**
+     * @param $url
+     * @return string
+     */
+    protected function normalizeUrl($url)
+    {
+        if (substr($url, 0, 4) != 'http') {
+            // Force the path become relative.
+            if (substr($url, 0, 1) !== '/') {
+                $url = '/' . $url;
+            }
+        }
+        return $url;
+    }
+
+    protected function computeBaseComponent(&$parts)
+    {
+        $this->baseComponent = sprintf(
+            "%s%s%s",
+            isset($parts['scheme']) ? $parts['scheme'] . "://" : '',
+            isset($parts['host']) ? $parts['host'] : '',
+            isset($parts['port']) ? ":" . $parts['port'] : ''
+        );
     }
 
     /**

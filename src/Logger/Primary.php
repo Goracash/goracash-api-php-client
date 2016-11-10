@@ -333,9 +333,8 @@ abstract class Primary
     }
 
     /**
-     * Exports a PHP value for logging to a string.
-     *
-     * @param mixed $value The value to
+     * @param $value
+     * @return string
      */
     protected function export($value)
     {
@@ -355,7 +354,7 @@ abstract class Primary
             );
         }
 
-        if ($value instanceof DateTime) {
+        if ($value instanceof \DateTime) {
             return $value->format($this->dateFormat);
         }
 

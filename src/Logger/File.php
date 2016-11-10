@@ -101,7 +101,11 @@ class File extends Primary
         $this->trappedErrorNumber = null;
         $this->trappedErrorString = null;
 
-        set_error_handler(array($this, 'trapError'));
+        set_error_handler(
+            function($errorNo, $errorString) {
+                $this->trapError($errorNo, $errorString);
+            }
+        );
 
         $needsChmod = !file_exists($this->file);
         $file = fopen($this->file, 'a');

@@ -162,7 +162,7 @@ class Client
      * Retrieve custom configuration for a specific class.
      * @param $class string|object - class or instance of class to retrieve
      * @param $key string optional - key to retrieve
-     * @return array
+     * @return mixed
      */
     public function getClassConfig($class, $key = null)
     {
