@@ -128,7 +128,7 @@ class ConfigtTest extends PHPUnit_Framework_TestCase
     public function testGetLoggerClass()
     {
         $result = $this->Config->getLoggerClass();
-        $this->assertEquals('Goracash\Logger\Void', $result);
+        $this->assertEquals('Goracash\Logger\Clean', $result);
     }
 
     public function testSetLoggerClass()

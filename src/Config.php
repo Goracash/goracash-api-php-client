@@ -46,7 +46,7 @@ class Config
             // Which Authentication, Storage and HTTP IO classes to use.
             'auth_class'    => 'Goracash\Service\Authentication',
             'io_class'      => self::USE_AUTO_IO_SELECTION,
-            'logger_class'  => 'Goracash\Logger\Void',
+            'logger_class'  => 'Goracash\Logger\Clean',
             // Don't change these unless you're working against a special development
             // or testing environment.
             'base_path' => 'https://ws.goracash.com',
