@@ -231,6 +231,15 @@ class Config
     }
 
     /**
+     * Set environment base path
+     * @param $basePath
+     */
+    public function setBasePath($basePath)
+    {
+        $this->configuration['base_path'] = $basePath;
+    }
+
+    /**
      * Get the client secret for the auth class.
      */
     public function getClientSecret()

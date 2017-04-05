@@ -196,6 +196,14 @@ class Client
     }
 
     /**
+     * @param $basePath
+     */
+    public function setBasePath($basePath)
+    {
+        $this->config->setBasePath($basePath);
+    }
+
+    /**
      * Set the Logger object
      * @param GoracashLogger $logger
      */
