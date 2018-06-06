@@ -4,7 +4,7 @@
     "type": "library",
     "version": "master",
     "source": {
-        "url": "git@github.com:Goracash/goracash-api-php-client.git",
+        "url": "git://github.com/Goracash/goracash-api-php-client.git",
         "type": "git",
         "reference": "origin/master"
     },
