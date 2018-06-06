@@ -2,12 +2,7 @@
     "name": "goracash/apiclient",
     "description": "Client library for Goracash APIs ",
     "type": "library",
-    "version": "master",
-    "source": {
-        "url": "git://github.com/Goracash/goracash-api-php-client.git",
-        "type": "git",
-        "reference": "origin/master"
-    },
+    "version": "1.1.6-dev",
     "keywords": ["goracash"],
     "homepage": "http://www.goracash.com/",
     "licence": "GPL-3.0-or-later",
@@ -35,7 +30,7 @@
     "minimum-stability": "stable",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.5-dev"
+            "dev-master": "1.x.x-dev"
         }
     }
 }
